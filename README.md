@@ -33,7 +33,7 @@ AMOUNT : 종목양…?
 RATIO_AVG : 평균 수익률 → 마지막에 지난 정보에서 평균 수익률이랑 비교한다고 해서 넣었는데 여기에 넣어야할지 종목정보DB에 넣어야할지 모르겠어요
 
 | STOCK_SEQ(PK) | STOCK_NAME(NN) | PRICE | AMOUNT | RATIO_AVG |
-| --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
 | NUMBER | VARCHAR(20) | NUMBER | NUMBER | NUMBER |
 
 <br/> <br/> <br/> 
