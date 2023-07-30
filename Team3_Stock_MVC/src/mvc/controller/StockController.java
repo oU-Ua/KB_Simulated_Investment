@@ -23,7 +23,7 @@ public class StockController {
     private StockService service = StockServiceImpl.getInstance();
 
     /**
-     * 주식 전체 출력
+     * 종목 조회 - 전체 주식 목록 출력 
      */
     public void stockAll() {
 		service.stockAll();
@@ -31,22 +31,22 @@ public class StockController {
     }
  
 
-	 /**
-     * 유저 등록 
-	 * @throws SearchNotFoundException 
-	 * @throws ElectronicsArrayBoundsException 
-     */
-   
-    public void user(String userName, int balance) {
-    	try {
-    		service.user(userName, balance);
-    		
-    		SuccessView.printMessage("등록되었습니다.");
-    	}catch(ElectronicsArrayBoundsException e) {
-        	FailView.errorMessage(e.getMessage());
-        }
-       
-    }
+//	 /**
+//     * 유저 등록 
+//	 * @throws SearchNotFoundException 
+//	 * @throws ElectronicsArrayBoundsException 
+//     */
+//   
+//    public void user(String userName, int balance) {
+//    	try {
+//    		service.user(userName, balance);
+//    		
+//    		SuccessView.printMessage("등록되었습니다.");
+//    	}catch(ElectronicsArrayBoundsException e) {
+//        	FailView.errorMessage(e.getMessage());
+//        }
+//       
+//    }
     
     
 
@@ -101,6 +101,16 @@ public class StockController {
      */
 	public void finMarket() {
 		SuccessView.printMessage("오늘의 장이 종료되었습니다.");
+		
+	}
+
+
+	public void stockUser() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void headline(int day) {
+		// TODO Auto-generated method stub
 		
 	}
     

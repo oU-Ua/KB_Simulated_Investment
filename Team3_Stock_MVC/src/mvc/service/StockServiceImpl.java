@@ -18,17 +18,19 @@ import mvc.exception.SearchNotFoundException;
 public class StockServiceImpl implements StockService {
 	
 	String [][] data = new String [][]{
-		{"100","선풍기","35000","삼성 선풍기"},
-		{"200","전자렌지","55000","잘 데워져요.."},
-		{"300","에어컨","5500000","무풍 에어컨 너무 시원해"},
-		{"400","냉장고","800000","LG 냉장고"},
-		{"500","드라이기","9000","LG 드라이기"}
+		{"100","선풍기","35000","5000000"},
+		{"200","전자렌지","55000","5000"},
+		{"300","에어컨","5500000","4000"},
+		{"400","냉장고","800000","2000"},
+		{"500","드라이기","9000","400"}
 	}; // 최초의 초기치 데이터를 준비!! electronics에 저장 
 	
 	
 	private static StockService instance = new StockServiceImpl(); 
     private static final int MAX_SIZE=10;
     List<Stock> list = new ArrayList<Stock>();
+    List<Stock> user = new ArrayList<Stock>();
+    
     
     /** 
      * 외부에서 객체 생성안됨. 
@@ -40,12 +42,12 @@ public class StockServiceImpl implements StockService {
 		return instance;
 	}
     
-//    private StockServiceImpl() {
-//        for(int i=0;i<data.length;i++) {
-//        	list.add(new Stock(Integer.parseInt(data[i][0]),data[i][1],Integer.parseInt(data[i][2]),data[i][3]));
-//        }
-//      
-//    }
+    private StockServiceImpl() {
+        for(int i=0;i<data.length;i++) {
+        	list.add(new Stock(Integer.parseInt(data[i][0]),data[i][1],Integer.parseInt(data[i][2]),Integer.parseInt(data[i][3])));
+        }
+      
+    }
 
 	@Override
 	public void user(String userNmae, int balance) throws ElectronicsArrayBoundsException {

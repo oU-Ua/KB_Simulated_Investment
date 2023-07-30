@@ -9,45 +9,55 @@ import mvc.dto.Stock;
    사용자의 요청을 키보드로 입력받는 클래스 
 */
 public class MenuView{
+	public MenuView() {}
+	public MenuView(int balance, int period) {
+		this.balance = balance;
+		this.period = period;
+	}
     Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController(); // 전역변수 초기화, 생성자 호출 
-	static int day;
-	static int today;
+	int balance;
+	int period;
+	
 
 	/**
 	  전체 메뉴를 출력하는 메소드
 	*/
 	public void printMenu(){
+		int today =0;
         
-	     while(today < day+1){
+	     while(today < period+1){
+	    	 System.out.println(today+"일차 시작합니다.");
+//	    	 System.out.pirntln(controller.headline(today)); headline을 어떻게 보여줄 지 모르겠어서 일단 함수형태로 생각해봤어요 
            System.out.println("----------------------------------------------------------------------------------");
-           System.out.println("1. 사용자등록    2. 오늘의 주식     3.종목 정보 확인     4. 매수     5. 매도    8. 장 종료      9. 프로그램 종료");
+           System.out.println("1. 종목 조회    2. 보유주식 조회     3. 장 종료      9. 프로그램 종료");
 		   System.out.println("----------------------------------------------------------------------------------");
 		   System.out.print("메뉴선택 > ");
 
 		   String  menu = sc.nextLine();
 		   switch(menu){
-               case "1" : 
-                 this.inputUser();
-			   break;
-			   case "2" : 
+			   case "1" : 
                  controller.stockAll();
+                 System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로  ");
+                 if(sc.nextInt()==1)
+                	 this.inputBuy();
+                 else if(sc.nextInt()==2)
+                	 this.inputSell();
+                 break;
+			   case "2" : 
+	                 controller.stockUser();
+	                 System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로  ");
+	                 if(sc.nextInt()==1)
+	                	 this.inputBuy();
+	                 else if(sc.nextInt()==2)
+	                	 this.inputSell();
 			   break;
 			   case "3" : 
-                 this.inputInfo();
-			   break;
-			   case "4" : 
-                 this.inputBuy();
-			   break;
-			   case "5" : 
-				   this.inputSell();
-				   break;
-			   case "8" : 
 	                 controller.finMarket();
 	                 today++;
 				   break;
 			   case "9" : 
-				   System.out.println("지금 "+ day +"차입니다. 정말로 프로그램을 종료하시겠습니까? (Y/N)");
+				   System.out.println("지금 " + today +"일차입니다. 정말로 프로그램을 종료하시겠습니까? (Y/N)");
 				   if(sc.nextLine().equals("Y"))
 					   System.exit(0);
 				   else 
@@ -59,6 +69,9 @@ public class MenuView{
 		   
 
 		 }//while문끝
+	     if(today == period) {
+	    	 SuccessView.printMessage(null);
+	     }
 
 	}//메소드끝
 
@@ -68,33 +81,33 @@ public class MenuView{
 
 
 
-	/**
-	   처음 사용자 등록할때 키보드 입력을 처리하는 메소드
-	*/
-	public void inputUser(){
-        System.out.print("사용자 이름을 입력하세요. ");
-        String userName = sc.nextLine();
-
-		System.out.print("초기 예산을 입력하세요. ");
-        int balance = Integer.parseInt(sc.nextLine());
-
-		System.out.print("모의투자를 진행할 기간을 입력하세요. ");
-        day = Integer.parseInt(sc.nextLine());
-
-
-		controller.user( userName, balance);
- 
-
-	}
-	
-	/**
-	  모델번호에 해당하는 설명을 수정하기 위해 키보드 입력처리하는 메소드
-	*/
-    public void inputInfo(){
-        System.out.print("정보를 확인하고 싶은 종목 번호를 입력하세요. 1. ~ 2. ~ 3.~ 4.~ ... 20. ~");
-         int stockSeq = Integer.parseInt(sc.nextLine());
-         	controller.infoSearch(stockSeq);
-    }
+//	/**
+//	   처음 사용자 등록할때 키보드 입력을 처리하는 메소드
+//	*/
+//	public void inputUser(){
+//        System.out.print("사용자 이름을 입력하세요. ");
+//        String userName = sc.nextLine();
+//
+//		System.out.print("초기 예산을 입력하세요. ");
+//        int balance = Integer.parseInt(sc.nextLine());
+//
+//		System.out.print("모의투자를 진행할 기간을 입력하세요. ");
+////        day = Integer.parseInt(sc.nextLine());
+//
+//
+//		controller.user( userName, balance);
+// 
+//
+//	}
+//	
+//	/**
+//	  모델번호에 해당하는 설명을 수정하기 위해 키보드 입력처리하는 메소드
+//	*/
+//    public void inputInfo(){
+//        System.out.print("정보를 확인하고 싶은 종목 번호를 입력하세요. 1. ~ 2. ~ 3.~ 4.~ ... 20. ~");
+//         int stockSeq = Integer.parseInt(sc.nextLine());
+//         	controller.infoSearch(stockSeq);
+//    }
 
 
 

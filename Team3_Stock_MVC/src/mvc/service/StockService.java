@@ -9,19 +9,7 @@ import mvc.exception.SearchNotFoundException;
 
 public interface StockService {
 
-    /**
-     * 유저 등록
-     *
-     * @param electronics
-     * 
-     * : 최대 List에 저장된 객체의 개수가 MAX-SIZE를 벗어나면 
-     *    ElectronicsArrayBoundsException 예외발생
-     *      - 예외메시지 : 배열의 길이를 벗어나 더이상 등록 할수 없습니다.
-     * @throws ElectronicsArrayBoundsException 
-     * @throws SearchNotFoundException 
-     * 
-     */
-    public void user(String userNmae, int balance) throws ElectronicsArrayBoundsException ;
+	
 
     /**
      * 등록된 전체 전자제품 검색 
