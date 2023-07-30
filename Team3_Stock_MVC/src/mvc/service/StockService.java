@@ -10,7 +10,7 @@ import mvc.exception.SearchNotFoundException;
 public interface StockService {
 
     /**
-     * 전자제품 등록
+     * 유저 등록
      *
      * @param electronics
      * 
@@ -21,13 +21,13 @@ public interface StockService {
      * @throws SearchNotFoundException 
      * 
      */
-    public void insert(Stock electronics) throws ElectronicsArrayBoundsException ;
+    public void user(String userNmae, int balance) throws ElectronicsArrayBoundsException ;
 
     /**
      * 등록된 전체 전자제품 검색 
      * @return
      */
-    public List<Stock> selectAll() ;
+    public List<Stock> stockAll() ;
     
     /**
      * 모델번호에 해당하는 전자제품 검색 
@@ -37,7 +37,7 @@ public interface StockService {
      *      SearchNotFoundException 예외발생
      *       -예외메시지 : modelNo+"는 없는 모델번호로 검색할수 없습니다."
      */
-    public Stock searchByModelNo(int modelNo)throws SearchNotFoundException ;
+    public Stock infosearch(int stockSeq)throws SearchNotFoundException ;
 
 
     /**
@@ -48,7 +48,7 @@ public interface StockService {
      *     SearchNotFoundException 예외발생
      *     있으면 전자제품 모델번호에 해당하는 설명을 수정한다.
      */
-    public void update(Stock electronics) throws SearchNotFoundException;
+    public void stockBuy(Stock stock) throws SearchNotFoundException;
     
     
     /**
@@ -60,20 +60,9 @@ public interface StockService {
      *     SearchNotFoundException 예외발생
      *     있으면 전자제품 모델번호에 해당하는 정보를 삭제한다.
      */
-    public void delete(int modelNo) throws SearchNotFoundException;
+    public void stockSell(Stock stock) throws SearchNotFoundException;
     
     
-    /**
-     * 입력받은 정렬기준으로 정렬하기
-     * @param 정렬기준 번호
-     * : 1 : 모델번호 2: 모델이름 3: 모델 가격 입력받은 숫자에 따라 정렬한다. 
-     */
-    public void sort(int i);
-   
-    /**
-     * 지금까지 변화 출력
-     */
-    public void log();
 
 }
 

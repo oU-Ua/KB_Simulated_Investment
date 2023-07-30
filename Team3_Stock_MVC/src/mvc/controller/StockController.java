@@ -21,42 +21,29 @@ import mvc.view.SuccessView;
 
 public class StockController {
     private StockService service = StockServiceImpl.getInstance();
-    public StringBuilder sb = new StringBuilder();
 
     /**
-     * 전체검색
+     * 주식 전체 출력
      */
-    public void selectAll() {
-		service.selectAll();
-		SuccessView.printAll(service.selectAll());
-		sb.append("전체검색 \n");
-		for(Stock elec : service.selectAll()) {
-	          sb.append(elec+"\n");
-	        }
-		sb.append("\n");
+    public void stockAll() {
+		service.stockAll();
+		SuccessView.printAll(service.stockAll());
     }
  
 
 	 /**
-     * 전자제품 등록 
+     * 유저 등록 
 	 * @throws SearchNotFoundException 
 	 * @throws ElectronicsArrayBoundsException 
      */
    
-    public void insert(Stock electronics) {
+    public void user(String userName, int balance) {
     	try {
-    		service.insert(electronics);
+    		service.user(userName, balance);
     		
     		SuccessView.printMessage("등록되었습니다.");
-    		sb.append("등록 \n");
-    		sb.append(electronics);
-    		sb.append("\n");
-    		
     	}catch(ElectronicsArrayBoundsException e) {
         	FailView.errorMessage(e.getMessage());
-        	sb.append("등록실패 \n");
-    		sb.append(e.getMessage());
-    		sb.append("\n");
         }
        
     }
@@ -68,76 +55,53 @@ public class StockController {
      * @param modelNo
      * @throws SearchNotFoundException 
      */
-    public void searchByModelNo(int modelNo) {
+    public void infoSearch(int stockSeq) {
     	try {
-    		Stock ele = service.searchByModelNo(modelNo);
-    		SuccessView.printSearchByModelNo(ele);
-    		sb.append("등록 \n");
-    		sb.append(ele);
-    		sb.append("\n");
+    		Stock st = service.infosearch(stockSeq);
+    		SuccessView.printSearchByModelNo(st);
+
     	}catch(SearchNotFoundException e) {
         	FailView.errorMessage(e.getMessage());
-        	sb.append("검색실패 \n");
-    		sb.append(e.getMessage());
-    		sb.append("\n");
         }
     	
     } 
 
     /**
-     * 모델번호에 해당하는 전자제품 수정하기 
-     * @param electronics
+     * 주식 매수하기 
+     * @param stock
      * @throws SearchNotFoundException 
      */
-    public void update(Stock electronics) {
+    public void buy(Stock stock) {
     	try {
-    		service.update(electronics);
-    		SuccessView.printMessage("수정되었습니다.");
-    		sb.append("수정 \n");
-    		sb.append(electronics);
-    		sb.append("\n");
+    		service.stockBuy(stock);
+    		SuccessView.printMessage("매수하였습니다.");
     	}catch(SearchNotFoundException e) {
         	FailView.errorMessage(e.getMessage());
-        	sb.append("수정실패 \n");
-    		sb.append(e.getMessage());
-    		sb.append("\n");
         }
     	
     }
     
     /**
-     * 모델번호에 해당하는 전자제품 삭제하기 
-     * @param electronics
+     * 주식 매도하기 
+     * @param stock
      * @throws SearchNotFoundException 
      */
-	public void deleteModelNo(int modelNo){
-		try {
-			service.delete(modelNo);
-			Stock ele = service.searchByModelNo(modelNo);
-			SuccessView.printMessage("삭제되었습니다.");
-			sb.append("삭제되었습니다. \n");
-    		sb.append(ele);
-    		sb.append("\n");
-		}catch(SearchNotFoundException e) {
-	      	FailView.errorMessage(e.getMessage());
-        	sb.append("삭제실패 \n");
-    		sb.append(e.getMessage());
-    		sb.append("\n");
-	      }
+    public void sell(Stock stock) {
+    	try {
+    		service.stockSell(stock);
+    		SuccessView.printMessage("매도하였습니다.");
+    	}catch(SearchNotFoundException e) {
+        	FailView.errorMessage(e.getMessage());
+        }
+    	
+    }
+    
+    /**
+     * 장 종료하기
+     */
+	public void finMarket() {
+		SuccessView.printMessage("오늘의 장이 종료되었습니다.");
 		
-	}
-	public void sort(int i) {
-		service.sort(i);
-		SuccessView.printAll(service.selectAll());
-		sb.append("정렬 \n");
-		for(Stock elec : service.selectAll()) {
-	          sb.append(elec+"\n");
-	        }
-		sb.append("\n");
-	}
-	public void log() {
-		service.log();
-		SuccessView.printMessage(sb.toString());
 	}
     
 }

@@ -40,106 +40,42 @@ public class StockServiceImpl implements StockService {
 		return instance;
 	}
     
-    private StockServiceImpl() {
-        for(int i=0;i<data.length;i++) {
-        	list.add(new Stock(Integer.parseInt(data[i][0]),data[i][1],Integer.parseInt(data[i][2]),data[i][3]));
-        }
-      
-    }
+//    private StockServiceImpl() {
+//        for(int i=0;i<data.length;i++) {
+//        	list.add(new Stock(Integer.parseInt(data[i][0]),data[i][1],Integer.parseInt(data[i][2]),data[i][3]));
+//        }
+//      
+//    }
 
 	@Override
-	public void insert(Stock electronics) throws ElectronicsArrayBoundsException{
-			if(list.size()==MAX_SIZE)
-				throw new ElectronicsArrayBoundsException("배열의 길이를 벗어나 더이상 등록 할수 없습니다.");
-			try {
-				searchByModelNo(electronics.getModelNo());
-				throw new ElectronicsArrayBoundsException("모델번호 오류로 등록할 수 없어요.");
-				
-			}catch (SearchNotFoundException e) {
-				list.add(electronics);
-
-			}
-			
-
-		
-	}
-
-	@Override
-	public List<Stock> selectAll() {
-		
-		return list;
-	}
-
-	@Override
-	public Stock searchByModelNo(int modelNo) throws SearchNotFoundException {
-		for(Stock e : list) {
-			if(e.getModelNo()==modelNo)
-				return e;
-		}
-		
-		throw new SearchNotFoundException(modelNo+"는 없는 모델번호로 검색할수 없습니다.");
-
-	}
-
-	@Override
-	public void update(Stock electronics) throws SearchNotFoundException {
-		for(Stock e : list) {
-			if(e.getModelNo()==electronics.getModelNo()) {
-				e.setModelDetail(electronics.getModelDetail());
-				return;
-			}
-		}
-		throw new SearchNotFoundException(electronics.getModelNo()+"는 없는 모델번호로 수정할 수 없습니다.");
-	}
-
-	@Override
-	public void delete(int modelNo) throws SearchNotFoundException {
-		// TODO Auto-generated method stub
-		for(Stock e : list) {
-			if(e.getModelNo()== modelNo) {
-				list.remove(list.indexOf(e));
-				return;
-			}
-		}
-		throw new SearchNotFoundException(modelNo+"는 없는 모델번호로 삭제할 수 없습니다.");
-		
-		
-	}
-
-	@Override
-	public void sort(int i) {
-		switch(i) {
-		case 1 : Collections.sort(list, new Comparator<Stock>() {
-
-			@Override
-			public int compare(Stock o1, Stock o2) {
-				return o1.getModelNo()-o2.getModelNo();
-			}
-			});break;
-		case 2 : Collections.sort(list, new Comparator<Stock>() {
-
-			@Override
-			public int compare(Stock o1, Stock o2) {
-				return o1.getModelName().compareTo(o2.getModelName());
-			}
-			});break;
-		case 3 : Collections.sort(list, new Comparator<Stock>() {
-
-			@Override
-			public int compare(Stock o1, Stock o2) {
-				return o1.getModelPrice()-o2.getModelPrice();
-			}
-			});break;
-		}
-		
-		
-		
-	}
-
-	@Override
-	public void log() {
+	public void user(String userNmae, int balance) throws ElectronicsArrayBoundsException {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public List<Stock> stockAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Stock infosearch(int stockSeq) throws SearchNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void stockBuy(Stock stock) throws SearchNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stockSell(Stock stock) throws SearchNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
     
 } // 클래스 끝 
