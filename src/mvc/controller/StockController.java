@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mvc.dto.Stock;
-import mvc.exception.ElectronicsArrayBoundsException;
-import mvc.exception.SearchNotFoundException;
+import mvc.exception.BuyingBalanceException;
+import mvc.exception.SellingAmountException;
 import mvc.service.StockService;
 import mvc.service.StockServiceImpl;
 import mvc.view.FailView;
@@ -53,14 +53,14 @@ public class StockController {
     /**
      * 모델번호에 해당하는 전자제품 검색
      * @param modelNo
-     * @throws SearchNotFoundException 
+     * @throws SellingAmountException 
      */
     public void infoSearch(int stockSeq) {
     	try {
     		Stock st = service.infosearch(stockSeq);
     		SuccessView.printSearchByModelNo(st);
 
-    	}catch(SearchNotFoundException e) {
+    	}catch(SellingAmountException e) {
         	FailView.errorMessage(e.getMessage());
         }
     	
@@ -69,13 +69,13 @@ public class StockController {
     /**
      * 주식 매수하기 
      * @param stock
-     * @throws SearchNotFoundException 
+     * @throws SellingAmountException 
      */
     public void buy(Stock stock) {
     	try {
     		service.stockBuy(stock);
     		SuccessView.printMessage("매수하였습니다.");
-    	}catch(SearchNotFoundException e) {
+    	}catch(SellingAmountException e) {
         	FailView.errorMessage(e.getMessage());
         }
     	
@@ -84,13 +84,13 @@ public class StockController {
     /**
      * 주식 매도하기 
      * @param stock
-     * @throws SearchNotFoundException 
+     * @throws SellingAmountException 
      */
     public void sell(Stock stock) {
     	try {
     		service.stockSell(stock);
     		SuccessView.printMessage("매도하였습니다.");
-    	}catch(SearchNotFoundException e) {
+    	}catch(SellingAmountException e) {
         	FailView.errorMessage(e.getMessage());
         }
     	

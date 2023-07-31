@@ -7,8 +7,8 @@ import java.util.List;
 
 
 import mvc.dto.Stock;
-import mvc.exception.ElectronicsArrayBoundsException;
-import mvc.exception.SearchNotFoundException;
+import mvc.exception.BuyingBalanceException;
+import mvc.exception.SellingAmountException;
 
 
 /**
@@ -18,11 +18,11 @@ import mvc.exception.SearchNotFoundException;
 public class StockServiceImpl implements StockService {
 	
 	String [][] data = new String [][]{
-		{"100","선풍기","35000","5000000"},
-		{"200","전자렌지","55000","5000"},
-		{"300","에어컨","5500000","4000"},
-		{"400","냉장고","800000","2000"},
-		{"500","드라이기","9000","400"}
+		{"100","삼성","35000","5000000"},
+		{"200","lg","55000","5000"},
+		{"300","apple","5500000","4000"},
+		{"400","테슬라","800000","2000"},
+		{"500","주식","9000","400"}
 	}; // 최초의 초기치 데이터를 준비!! electronics에 저장 
 	
 	
@@ -57,19 +57,19 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
-	public Stock infosearch(int stockSeq) throws SearchNotFoundException {
+	public Stock infosearch(int stockSeq) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void stockBuy(Stock stock) throws SearchNotFoundException {
+	public void stockBuy(Stock stock) throws BuyingBalanceException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void stockSell(Stock stock) throws SearchNotFoundException {
+	public void stockSell(Stock stock) throws SellingAmountException {
 		// TODO Auto-generated method stub
 		
 	}
