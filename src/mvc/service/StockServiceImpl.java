@@ -52,8 +52,8 @@ public class StockServiceImpl implements StockService {
 
 	@Override
 	public List<Stock> stockAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return list;
 	}
 
 	@Override

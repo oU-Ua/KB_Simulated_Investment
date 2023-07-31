@@ -9,15 +9,14 @@ import mvc.dto.Stock;
    사용자의 요청을 키보드로 입력받는 클래스 
 */
 public class MenuView{
+	int period;
 	public MenuView() {}
-	public MenuView(int balance, int period) {
-		this.balance = balance;
+	public MenuView(int period) {
 		this.period = period;
 	}
     Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController(); // 전역변수 초기화, 생성자 호출 
-	int balance;
-	int period;
+	
 	
 
 	/**
@@ -37,14 +36,15 @@ public class MenuView{
 		   String  menu = sc.nextLine();
 		   switch(menu){
 			   case "1" : 
-                 controller.stockAll();
+				   controller.stockAll();
                  System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로  ");
                  if(sc.nextInt()==1)
                 	 this.inputBuy();
                  else if(sc.nextInt()==2)
                 	 this.inputSell();
+                 else if(sc.nextInt()==3) //뭘 넣어야뒤로갈까
                  break;
-			   case "2" : 
+			   case "2" :
 	                 controller.stockUser();
 	                 System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로  ");
 	                 if(sc.nextInt()==1)
@@ -58,7 +58,7 @@ public class MenuView{
 				   break;
 			   case "9" : 
 				   System.out.println("지금 " + today +"일차입니다. 정말로 프로그램을 종료하시겠습니까? (Y/N)");
-				   if(sc.nextLine().equals("Y"))
+				   if(sc.nextLine().equals("Y")||sc.nextLine().equals("y"))
 					   System.exit(0);
 				   else 
 					   continue;
