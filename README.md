@@ -8,9 +8,6 @@ KB 모의 투자는 20가지의 주식 종류로 구성되어 있으며, 매일 
 ## DB 설계
 ### **사용자 DB**
 
-USER_SEQ : 유저 번호
-
-USER_NAME : 유저 이름
 
 BALANCE : 초기예산
 
@@ -28,7 +25,11 @@ STOCK_NAME : 종목 이름
 
 PRICE : 종목가격
 
-AMOUNT : 종목양…?
+AMOUNT : 주식량
+
+RELATED_STOCK : 관련주
+
+RATIO_PERIOD : 기간별 수익률
 
 | STOCK_SEQ(PK) | STOCK_NAME(NN) | PRICE | AMOUNT |  RELATED_STOCK(NN) | RATIO_PERIOD |
 | --- | --- | --- |--- | --- | --- |
