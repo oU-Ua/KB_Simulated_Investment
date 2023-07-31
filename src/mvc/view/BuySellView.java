@@ -8,7 +8,7 @@ public class BuySellView {
 	Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController();
 	public BuySellView() {
-		 System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로  ");
+		 System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로  4. 장종료 ");
 		 int menu = sc.nextInt();
          if(menu ==1)
         	 this.inputBuy();
@@ -16,6 +16,10 @@ public class BuySellView {
         	 this.inputSell();
          else if(menu==3) {
         	 this.back();
+         }
+         else if(menu ==4) {
+        	 controller.finMarket();
+        	 
          }
 	}
 	public void back() {
@@ -52,9 +56,6 @@ public class BuySellView {
 		System.out.print("얼마나 매도하시겠습니까?");
 		int amountSell = Integer.parseInt(sc.nextLine());
       	controller.sell( new Stock(stockName , amountSell) );
-      
-		
-
 	}
 
 }
