@@ -9,14 +9,20 @@ public class BuySellView {
 	StockController controller = new StockController();
 	public BuySellView() {
 		 System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로  ");
-         if(sc.nextInt()==1)
+		 int menu = sc.nextInt();
+         if(menu ==1)
         	 this.inputBuy();
-         else if(sc.nextInt()==2)
+         else if(menu==2)
         	 this.inputSell();
-         else if(sc.nextInt()==3) {
-        	 MenuView mv = new MenuView();
-        	 mv.printMenu();
+         else if(menu==3) {
+        	 this.back();
          }
+	}
+	public void back() {
+		System.out.println("3입니다.");
+		MenuView mv = new MenuView();
+		mv.printMenu();
+		
 	}
 	/**
 	  모델번호에 해당하는 설명을 수정하기 위해 키보드 입력처리하는 메소드

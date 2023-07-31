@@ -17,14 +17,14 @@ public class MenuView{
 	}
     Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController(); // 전역변수 초기화, 생성자 호출 
-	
+	public static int today =0;
 	
 
 	/**
 	  전체 메뉴를 출력하는 메소드
 	*/
 	public void printMenu(){
-		int today =0;
+		
         
 	     while(today < period+1){
 	    	 System.out.println(today+"일차 시작합니다.");
