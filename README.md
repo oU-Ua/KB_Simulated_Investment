@@ -15,9 +15,9 @@ USER_NAME : 유저 이름
 BALANCE : 초기예산
 
 RATIO : 수익률
-| USER_SEQ(PK) | USER_NAME(NN) | BALANCE | RATIO |
-| --- | --- | --- | --- |
-| NUMBER | VARCHAR(10) | NUMBER | NUMBER |
+| BALANCE | RATIO |
+| --- | --- |
+| NUMBER | NUMBER |
 
 <br/> <br/> <br/> 
 ### **주식정보 DB**
@@ -30,24 +30,10 @@ PRICE : 종목가격
 
 AMOUNT : 종목양…?
 
-RATIO_AVG : 평균 수익률 → 마지막에 지난 정보에서 평균 수익률이랑 비교한다고 해서 넣었는데 여기에 넣어야할지 종목정보DB에 넣어야할지 모르겠어요
+| STOCK_SEQ(PK) | STOCK_NAME(NN) | PRICE | AMOUNT |  RELATED_STOCK(NN) | RATIO_PERIOD |
+| --- | --- | --- |--- | --- | --- |
+| NUMBER | VARCHAR(20) | NUMBER | NUMBER | VARCHAR(20) | NUMBER |
 
-| STOCK_SEQ(PK) | STOCK_NAME(NN) | PRICE | AMOUNT | RATIO_AVG |
-| --- | --- | --- | --- | --- |
-| NUMBER | VARCHAR(20) | NUMBER | NUMBER | NUMBER |
-
-<br/> <br/> <br/> 
-### 종목정보 DB
-
-STOCK_SEQ : 종목 번호
-
-RELATED_STOCK : 관련주
-
-RATIO_PERIOD : 기간별 수익률
-
-| STOCK_SEQ(PK,FK) | RELATED_STOCK(NN) | RATIO_PERIOD |
-| --- | --- | --- |
-| NUMBER | VARCHAR(20) | NUMBER |
 
 <br/> <br/> <br/> 
 ### 매수 정보 DB
