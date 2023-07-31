@@ -11,8 +11,8 @@ public class Stock {
     
     
     public Stock() {};
-    public Stock(String stockName, int amount) {
-    	this.stockName =stockName;
+    public Stock(int  stockSeq, int amount) {
+    	this.stockSeq =stockSeq;
     	this.amount = amount;
     }
     

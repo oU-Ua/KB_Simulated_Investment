@@ -1,8 +1,5 @@
 package mvc.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mvc.dto.Stock;
 import mvc.exception.BuyingBalanceException;
 import mvc.exception.SearchNotFoundException;
@@ -10,6 +7,7 @@ import mvc.exception.SellingAmountException;
 import mvc.service.StockService;
 import mvc.service.StockServiceImpl;
 import mvc.view.FailView;
+import mvc.view.MenuView;
 import mvc.view.SuccessView;
 
 
@@ -31,46 +29,15 @@ public class StockController {
 		SuccessView.printAll(service.stockAll());
     }
 	public void stockUser() {
-		service.stokcUserAll();
-		SuccessView.printAll(service.stockUserAll());
+		service.stockUserAll();
+		if(service.stockUserAll().isEmpty())
+			FailView.errorMessage("매수한 주식이 없습니다.");  // exception처리를 하는게 좋을까요?
+		else
+		SuccessView.printUser(service.stockUserAll());
 		
 	}
  
-
-//	 /**
-//     * 유저 등록 
-//	 * @throws SearchNotFoundException 
-//	 * @throws ElectronicsArrayBoundsException 
-//     */
-//   
-//    public void user(String userName, int balance) {
-//    	try {
-//    		service.user(userName, balance);
-//    		
-//    		SuccessView.printMessage("등록되었습니다.");
-//    	}catch(ElectronicsArrayBoundsException e) {
-//        	FailView.errorMessage(e.getMessage());
-//        }
-//       
-//    }
-    
-    
-
-    /**
-     * 모델번호에 해당하는 전자제품 검색
-     * @param modelNo
-     * @throws SellingAmountException 
-     */
-    public void infoSearch(int stockSeq) {
-    	try {
-    		Stock st = service.infosearch(stockSeq);
-    		SuccessView.printSearchByModelNo(st);
-
-    	}catch(SearchNotFoundException e) {
-        	FailView.errorMessage(e.getMessage());
-        }
-    	
-    } 
+     
 
     /**
      * 주식 매수하기 
@@ -81,21 +48,27 @@ public class StockController {
     	try {
     		service.stockBuy(stock);
     		SuccessView.printMessage("매수하였습니다.");
-    	}catch(SellingAmountException e) {
+    	}catch( BuyingBalanceException e) {
         	FailView.errorMessage(e.getMessage());
-        }
+        } catch (SearchNotFoundException e) {
+			// TODO Auto-generated catch block
+        	FailView.errorMessage(e.getMessage());
+		}
     	
     }
     
     /**
      * 주식 매도하기 
      * @param stock
+     * @throws SearchNotFoundException 
      * @throws SellingAmountException 
      */
-    public void sell(Stock stock) {
+    public void sell(Stock stock)  {
     	try {
     		service.stockSell(stock);
     		SuccessView.printMessage("매도하였습니다.");
+    	}catch(SearchNotFoundException e) {
+    		FailView.errorMessage(e.getMessage());
     	}catch(SellingAmountException e) {
         	FailView.errorMessage(e.getMessage());
         }
@@ -107,7 +80,8 @@ public class StockController {
      */
 	public void finMarket() {
 		SuccessView.printMessage("오늘의 장이 종료되었습니다.");
-		
+		//장이 종료되었을 때 그냥 종료만 띄울것인지 오늘 하루 log도 띄울지
+		MenuView.today++;
 	}
 
 

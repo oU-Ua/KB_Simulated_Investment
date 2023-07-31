@@ -20,11 +20,12 @@ class StartView {
             int  balance = Integer.parseInt(sc.nextLine());
             System.out.println("투자기간을 입력하세요.");
             int  period = Integer.parseInt(sc.nextLine());
-            User user = new User(balance);
+            User.balance = balance;
             
-        	 MenuView mv = new MenuView(period); // 전역변수 초기화, 생성자 호출 
+        	 MenuView mv = new MenuView(period,balance); // 전역변수 초기화, 생성자 호출 
              mv.printMenu();
         }
     }
+    
     
 }

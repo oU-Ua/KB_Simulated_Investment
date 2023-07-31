@@ -1,7 +1,7 @@
 package mvc.dto;
 
 public class User {
-	private int balance;
+	public static int balance;
 	private int ratio;
 
 	public User(int balance) {

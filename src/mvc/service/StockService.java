@@ -34,7 +34,7 @@ public interface StockService {
      *     SearchNotFoundException 예외발생
      *     있으면 전자제품 모델번호에 해당하는 설명을 수정한다.
      */
-    public void stockBuy(Stock stock) throws BuyingBalanceException;
+    public void stockBuy(Stock stock) throws BuyingBalanceException,SearchNotFoundException;
     
     
     /**
@@ -46,7 +46,7 @@ public interface StockService {
      *     SearchNotFoundException 예외발생
      *     있으면 전자제품 모델번호에 해당하는 정보를 삭제한다.
      */
-    public void stockSell(Stock stock) throws SellingAmountException;
+    public void stockSell(Stock stock) throws SellingAmountException,SearchNotFoundException;
 
 
 	

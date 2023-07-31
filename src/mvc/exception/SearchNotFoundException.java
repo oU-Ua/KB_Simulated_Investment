@@ -5,7 +5,7 @@ package mvc.exception;
  * */
 public class SearchNotFoundException extends Exception {
 	public SearchNotFoundException() {
-		super("해당하는 ")
+		super("해당하는 주식을 찾을 수 없습니다.");
 	}
 	public SearchNotFoundException(String message) {
 		super(message);

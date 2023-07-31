@@ -3,6 +3,7 @@ package mvc.view;
 import java.util.List;
 
 import mvc.dto.Stock;
+import mvc.dto.User;
 import mvc.dto.UserStock;
 
 /**
@@ -13,7 +14,7 @@ public class SuccessView {
 
     /**
      * 전달된 배열을 출력(전체 검색 결과)
-     * @param electronics
+     * @param list
      */
     public static void printAll(List<Stock> list){
 		System.out.println("******  총 ("+list.size()+")개의 주식 종목이 있습니다. *****************");
@@ -23,11 +24,16 @@ public class SuccessView {
 
 		System.out.println();
     }
-    public static void printUser(List<UserStock> list){
-		System.out.println("****** 현재 보유하고 있는 주식은 ("+list.size()+")개입니다. *****************");
-        for(UserStock st : list) {
+    /**
+     * 전달된 배열을 출력 (사용자의 주식 검색 결과)
+     * @param user
+     */
+    public static void printUser(List<UserStock> user){
+		System.out.println("****** 현재 보유하고 있는 주식은 ("+user.size()+")개입니다. *****************");
+        for(UserStock st : user) {
            System.out.println(st);
         }
+        System.out.println("남아있는 잔고는 "+User.balance+"입니다.");
 
 		System.out.println();
     }
