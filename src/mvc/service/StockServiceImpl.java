@@ -49,11 +49,6 @@ public class StockServiceImpl implements StockService {
       
     }
 
-	@Override
-	public void user(String userNmae, int balance) throws ElectronicsArrayBoundsException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public List<Stock> stockAll() {
