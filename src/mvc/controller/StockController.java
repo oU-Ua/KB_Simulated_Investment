@@ -5,6 +5,7 @@ import java.util.List;
 
 import mvc.dto.Stock;
 import mvc.exception.BuyingBalanceException;
+import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 import mvc.service.StockService;
 import mvc.service.StockServiceImpl;
@@ -29,6 +30,11 @@ public class StockController {
 		service.stockAll();
 		SuccessView.printAll(service.stockAll());
     }
+	public void stockUser() {
+		service.stokcUserAll();
+		SuccessView.printAll(service.stockUserAll());
+		
+	}
  
 
 //	 /**
@@ -60,7 +66,7 @@ public class StockController {
     		Stock st = service.infosearch(stockSeq);
     		SuccessView.printSearchByModelNo(st);
 
-    	}catch(SellingAmountException e) {
+    	}catch(SearchNotFoundException e) {
         	FailView.errorMessage(e.getMessage());
         }
     	
@@ -105,10 +111,7 @@ public class StockController {
 	}
 
 
-	public void stockUser() {
-		// TODO Auto-generated method stub
-		
-	}
+
 	public void headline(int day) {
 		// TODO Auto-generated method stub
 		

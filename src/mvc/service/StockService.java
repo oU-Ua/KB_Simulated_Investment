@@ -1,10 +1,11 @@
 package mvc.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mvc.dto.Stock;
+import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
+import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 
 public interface StockService {
@@ -12,10 +13,11 @@ public interface StockService {
 	
 
     /**
-     * 등록된 전체 전자제품 검색 
+     * 등록된 전체 주식 종목 조회 
      * @return
      */
     public List<Stock> stockAll() ;
+    
     
     /**
      * 모델번호에 해당하는 전자제품 검색 
@@ -25,7 +27,7 @@ public interface StockService {
      *      SearchNotFoundException 예외발생
      *       -예외메시지 : modelNo+"는 없는 모델번호로 검색할수 없습니다."
      */
-    public Stock infosearch(int stockSeq) ;
+    public Stock infosearch(int stockSeq) throws SearchNotFoundException;
 
 
     /**
@@ -49,6 +51,9 @@ public interface StockService {
      *     있으면 전자제품 모델번호에 해당하는 정보를 삭제한다.
      */
     public void stockSell(Stock stock) throws SellingAmountException;
+
+
+	public List<UserStock> stockUserAll();
     
     
 
