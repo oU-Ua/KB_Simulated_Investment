@@ -32,7 +32,7 @@ public class SuccessView {
 		System.out.println();
     }
 
-    // 모델번호에 해당하는 전제제품 출력하기
+    
     public static void printSearchByModelNo(Stock electronics) {
         System.out.println(electronics +"\n");
     }

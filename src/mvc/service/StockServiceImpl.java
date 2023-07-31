@@ -1,12 +1,14 @@
 package mvc.service;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 
 import mvc.dto.Stock;
+import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
 import mvc.exception.SellingAmountException;
 
@@ -29,7 +31,7 @@ public class StockServiceImpl implements StockService {
 	private static StockService instance = new StockServiceImpl(); 
     private static final int MAX_SIZE=10;
     List<Stock> list = new ArrayList<Stock>();
-    List<Stock> user = new ArrayList<Stock>();
+    List<UserStock> user = new ArrayList<UserStock>();
     
     
     /** 
@@ -48,20 +50,16 @@ public class StockServiceImpl implements StockService {
         }
       
     }
-
-
 	@Override
 	public List<Stock> stockAll() {
 		
 		return list;
 	}
-
 	@Override
-	public Stock infosearch(int stockSeq) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<UserStock> stockUserAll() {
+		
+		return user;
 	}
-
 	@Override
 	public void stockBuy(Stock stock) throws BuyingBalanceException {
 		// TODO Auto-generated method stub
@@ -73,6 +71,8 @@ public class StockServiceImpl implements StockService {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
     
 } // 클래스 끝 

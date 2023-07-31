@@ -20,14 +20,10 @@ public interface StockService {
     
     
     /**
-     * 모델번호에 해당하는 전자제품 검색 
-     * @param modelNo
+     * 등록된 이용자의 주식 종목 조회 
      * @return
-     *   : 만약 찾는 정보가 없으면 
-     *      SearchNotFoundException 예외발생
-     *       -예외메시지 : modelNo+"는 없는 모델번호로 검색할수 없습니다."
      */
-    public Stock infosearch(int stockSeq) throws SearchNotFoundException;
+    public List<UserStock> stockUserAll();
 
 
     /**
@@ -53,7 +49,7 @@ public interface StockService {
     public void stockSell(Stock stock) throws SellingAmountException;
 
 
-	public List<UserStock> stockUserAll();
+	
     
     
 

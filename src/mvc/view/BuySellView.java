@@ -19,6 +19,7 @@ public class BuySellView {
          }
          else if(menu ==4) {
         	 controller.finMarket();
+        	 MenuView.today++;
         	 
          }
 	}
