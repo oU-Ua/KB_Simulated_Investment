@@ -19,28 +19,31 @@ class StartView {
             	System.exit(0);
             }
             else if(start.equals("Y")||start.equals("y")) {
+
             	int seedMoney = 0;
             	int period =0;
-            	try {
-            		seedMoney = inputSeedMoney();
-				} catch (NumberFormatException e) {
-					System.out.println("시드머니는 숫자로만 설정할 수 있습니다. 다시 입력해주세요.");
-					inputSeedMoney();
-				}
-            	
-            	try {
-            		period = inputPeriod();
-				} catch (NumberFormatException e) {
-					System.out.println("period"+e.getMessage());
-					System.out.println("기간은 숫자로만 설정할 수 있습니다. 다시 입력해주세요.");
-//					inputPeriod();
-				} catch (PeriodInexOutException e) {
-					FailView.errorMessage(e.getMessage());
-				}
-               
+            	while(seedMoney == 0) {
+            		try {
+            			seedMoney = inputSeedMoney();
+            		} catch (NumberFormatException e) {
+            			System.out.println("시드머니는 숫자로만 설정할 수 있습니다. 다시 입력해주세요.");
+            		}
+            	}
+
+            	while(period == 0) {
+            		try {
+            			period = inputPeriod();
+            		} catch (NumberFormatException e) {
+            			System.out.println("기간은 숫자로만 설정할 수 있습니다. 다시 입력해주세요.");
+            		} catch (PeriodInexOutException e) {
+            			FailView.errorMessage(e.getMessage());
+            		}
+            	}
                 //투자기간에 대한 제한 ?
+            	System.out.println();
                 MenuView.period = period;
                 StockController.seedmoney = seedMoney;
+                System.out.println();
             	 MenuView mv = new MenuView(); // 전역변수 초기화, 생성자 호출 
                  mv.printMenu();
                  break;
