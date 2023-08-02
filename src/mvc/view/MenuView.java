@@ -14,11 +14,12 @@ public class MenuView{
 	public MenuView() {}
 	public MenuView(int period,int balance) {
 		this.period = period;
-		controller.seedmoney = balance;
+		this.seedmoney = balance;
 		
 	}
-	public int period;
-    Scanner sc= new Scanner(System.in);
+	public static int period;
+    public static int seedmoney;
+	Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController(); // 전역변수 초기화, 생성자 호출 
 	public static int today =1;
 

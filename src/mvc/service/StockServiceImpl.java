@@ -3,6 +3,7 @@ package mvc.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import mvc.controller.StockController;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
@@ -67,15 +68,17 @@ public class StockServiceImpl implements StockService {
 		//1.예외처리 : 매수하려는 양이 현재 잔고보다 많을때 
 		Stock buyStock = searchBystockName(stock.getStockName()); // 구매하려는 주식의 가격을 알기 위해서 주식list에서 주식 찾기
 		
-		if(buyStock.getPrice()*stock.getAmount() > balance)
-			throw new BuyingBalanceException();
+		if(buyStock.getPrice()*stock.getAmount() > balance) {
+			System.out.println(buyStock.getPrice()*stock.getAmount());
+			System.out.println(balance);
+			throw new BuyingBalanceException();}
 
 		//2.이미 userstock에 있는경우 : amount값만 증가.
 		for(UserStock us : userlist) {
 			if(us.getStockSeq()==stock.getStockSeq()) {
 				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*stock.getAmount()) / (us.getAmountBuy()+stock.getAmount()));
 				us.setAmountBuy(us.getAmountBuy()+stock.getAmount());
-				balance = balance - stock.getPrice()*stock.getAmount();
+				StockController.balance = balance - stock.getPrice()*stock.getAmount();
 				return;
 			}
 
@@ -133,7 +136,7 @@ public class StockServiceImpl implements StockService {
 		else if(stock.getAmount() == sellStock.getAmountBuy())
 			userlist.remove(userlist.indexOf(sellStock));
 		Stock select = searchBystockName(stock.getStockName());
-		balance = balance + select.getPrice()*stock.getAmount();		
+		StockController.balance = balance + select.getPrice()*stock.getAmount();		
 		
 		
 	}

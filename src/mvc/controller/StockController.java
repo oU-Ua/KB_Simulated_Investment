@@ -21,8 +21,8 @@ import mvc.view.SuccessView;
 
 public class StockController {
     private StockService service = StockServiceImpl.getInstance();
-	public int seedmoney;
-	public int balance = seedmoney;
+	public static int seedmoney;
+	public static int balance = seedmoney;
 
     /**
      * 종목 조회 - 전체 주식 목록 출력 
@@ -36,7 +36,7 @@ public class StockController {
 		if(service.stockUserAll().isEmpty())
 			FailView.errorMessage("매수한 주식이 없습니다.");  // exception처리를 하는게 좋을까요?
 		else
-		SuccessView.printUser(service.stockUserAll(), balance);
+		SuccessView.printUser(service.stockUserAll(),balance);
 		
 	}
  
@@ -49,6 +49,7 @@ public class StockController {
      */
     public void buy(Stock stock) {
     	try {
+    		System.out.println(balance);
     		service.stockBuy(stock, balance);
     		SuccessView.printMessage("매수하였습니다.");
     	}catch( BuyingBalanceException e) {
@@ -70,6 +71,7 @@ public class StockController {
      */
     public void sell(Stock stock)  {
     	try {
+    		System.out.println(balance);
     		service.stockSell(stock, balance);
     		SuccessView.printMessage("매도하였습니다.");
     	}catch(SearchNotFoundException e) {

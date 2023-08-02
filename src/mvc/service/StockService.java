@@ -10,9 +10,7 @@ import mvc.exception.SellingAmountException;
 
 public interface StockService {
 
-	
-
-    /**
+	/**
      * 등록된 전체 주식 종목 조회 
      * @return
      */
