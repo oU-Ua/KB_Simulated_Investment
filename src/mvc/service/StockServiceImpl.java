@@ -1,23 +1,17 @@
 package mvc.service;
 
 import java.util.ArrayList;
-
-
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import mvc.dto.Stock;
-import mvc.dto.User;
 import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
-import mvc.view.MenuView;
 
 
 /**
- * 전자제품에 관련된 기능을 담당할 클래스
+ * 주식에 관련된 기능을 담당할 클래스
  */
 
 public class StockServiceImpl implements StockService {
@@ -34,8 +28,9 @@ public class StockServiceImpl implements StockService {
 	private static StockService instance = new StockServiceImpl(); 
     private static final int MAX_SIZE=10; // 매수할 수 있는 주식의 한계를 정할까요 ?
     List<Stock> list = new ArrayList<Stock>();
-    List<UserStock> user = new ArrayList<UserStock>();
-    
+//    List<Stock> list = stockDao.selectAll();
+    List<UserStock> userlist = new ArrayList<UserStock>();
+//  List<UserStock> user = userStockDao.selectUserAll();    
     
     /** 
      * 외부에서 객체 생성안됨. 
@@ -61,31 +56,33 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public List<UserStock> stockUserAll() {
 		
-		return user;
+		return userlist;
 	}
 	
 	/**
 	 * 입력한 종목을 매수
 	 */
 	@Override
-	public void stockBuy(Stock stock) throws BuyingBalanceException, SearchNotFoundException {
-		//1.예외처리 매수하려는 양이 현재 잔고보다 많을때 
-		if(stock.getPrice()*stock.getAmount()>User.balance)
-			throw new BuyingBalanceException();
+	public void stockBuy(Stock stock, int balance) throws BuyingBalanceException, SearchNotFoundException {
+		//1.예외처리 : 매수하려는 양이 현재 잔고보다 많을때 
+		Stock buyStock = searchBystockName(stock.getStockName()); // 구매하려는 주식의 가격을 알기 위해서 주식list에서 주식 찾기
 		
-		Stock select = searchBystockNo(stock.getStockSeq());
+		if(buyStock.getPrice()*stock.getAmount() > balance)
+			throw new BuyingBalanceException();
+
 		//2.이미 userstock에 있는경우 : amount값만 증가.
-		for(UserStock us : user) {
+		for(UserStock us : userlist) {
 			if(us.getStockSeq()==stock.getStockSeq()) {
+				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*stock.getAmount()) / (us.getAmountBuy()+stock.getAmount()));
 				us.setAmountBuy(us.getAmountBuy()+stock.getAmount());
-				User.balance = User.balance -stock.getPrice()*stock.getAmount();
+				balance = balance - stock.getPrice()*stock.getAmount();
 				return;
 			}
 
 		}
 		//3. userstock에 없는 경우 : userstock에 새로 추가 
-		user.add(new UserStock(select.getStockSeq(), select.getStockName(), stock.getAmount()));
-		User.balance = User.balance -select.getPrice()*stock.getAmount();	
+		userlist.add(new UserStock(buyStock.getStockSeq(), buyStock.getStockName(), stock.getAmount(),stock.getPrice()));
+		balance = balance -buyStock.getPrice()*stock.getAmount();	
 		
 	}
 	
@@ -95,13 +92,13 @@ public class StockServiceImpl implements StockService {
 	 * @return
 	 * @throws SearchNotFoundException
 	 */
-	public Stock searchBystockNo(int stock_seq) throws SearchNotFoundException {
+	public Stock searchBystockName(String stock_name) throws SearchNotFoundException {
 		for(Stock st : list) {
-			if(st.getStockSeq()==stock_seq)
+			if(st.getStockName().equals(stock_name))
 				return st;
 		}
 		
-		throw new SearchNotFoundException(stock_seq+"는 없는 종목번호입니다.");
+		throw new SearchNotFoundException(stock_name+"는 없는 종목입니다.");
 
 	}
 	
@@ -111,19 +108,19 @@ public class StockServiceImpl implements StockService {
 	 * @return
 	 * @throws SearchNotFoundException
 	 */
-	public UserStock searchByUserstockNo(int stock_seq) throws SearchNotFoundException {
-		for(UserStock us : user) {
-			if(us.getStockSeq()==stock_seq)
+	public UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException {
+		for(UserStock us : userlist) {
+			if(us.getStockName().equals(stock_name))
 				return us;
 		}
 		
-		throw new SearchNotFoundException(stock_seq+"는 매수하지 않은 종목번호입니다.");
+		throw new SearchNotFoundException(stock_name+"는 매수하지 않은 종목입니다.");
 
 	}
 
 	@Override
-	public void stockSell(Stock stock) throws SellingAmountException, SearchNotFoundException {
-			UserStock sellStock = searchByUserstockNo(stock.getStockSeq());
+	public void stockSell(Stock stock, int balance) throws SellingAmountException, SearchNotFoundException {
+			UserStock sellStock = searchByUserstockName(stock.getStockName());
 		//1.예외처리 
 		if(stock.getAmount() > sellStock.getAmountBuy())
 			throw new SellingAmountException();
@@ -134,12 +131,21 @@ public class StockServiceImpl implements StockService {
 		
 		//3. 매도하려는 주식량 = 갖고있는 주식량 : user에서 삭제
 		else if(stock.getAmount() == sellStock.getAmountBuy())
-			user.remove(user.indexOf(sellStock));
-		Stock select = searchBystockNo(stock.getStockSeq());
-		User.balance = User.balance + select.getPrice()*stock.getAmount();		
+			userlist.remove(userlist.indexOf(sellStock));
+		Stock select = searchBystockName(stock.getStockName());
+		balance = balance + select.getPrice()*stock.getAmount();		
 		
 		
 	}
+
+//	@Override
+//	public Stock stockDetail(String stockName) throws SearchNotFoundException {
+//		Stock select = new Stock();
+//		select = searchBystockName(stockName);
+//		return select;
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 
 

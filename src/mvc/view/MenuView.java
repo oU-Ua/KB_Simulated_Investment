@@ -10,16 +10,17 @@ import mvc.dto.Stock;
    사용자의 요청을 키보드로 입력받는 클래스 
 */
 public class MenuView{
-	int period;
+	
 	public MenuView() {}
 	public MenuView(int period,int balance) {
 		this.period = period;
-		this.balance = balance;
+		controller.seedmoney = balance;
+		
 	}
+	public int period;
     Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController(); // 전역변수 초기화, 생성자 호출 
 	public static int today =1;
-	public static int balance;
 
 	/**
 	  전체 메뉴를 출력하는 메소드
@@ -28,9 +29,10 @@ public class MenuView{
 		
         
 	     while(today < period+1){
-	    	 System.out.println(today+"일차 시작합니다.");
+	    	 System.out.println("\n\n");
+	    	 System.out.println(today+"일차 장 \n");
 //	    	 System.out.pirntln(controller.headline(today)); headline을 어떻게 보여줄 지 모르겠어서 일단 함수형태로 생각해봤어요 
-           System.out.println("----------------------------------------------------------------------------------");
+           System.out.println("----------------------------------- Menu -----------------------------------------");
            System.out.println("1. 종목 조회    2. 보유주식 조회     3. 장 종료      9. 프로그램 종료");
 		   System.out.println("----------------------------------------------------------------------------------");
 		   System.out.print("메뉴선택 > ");
@@ -39,11 +41,11 @@ public class MenuView{
 		   switch(menu){
 			   case "1" : 
 				   controller.stockAll();
-				   BuySellView bs = new BuySellView();
+				   this.inputDetail();
 				   break;
 			   case "2" :
 	                 controller.stockUser();
-	                 BuySellView bs1 = new BuySellView();
+	                 System.out.println("메뉴로 돌아갑니다.");
 			   break;
 			   case "3" : 
 	                 controller.finMarket();
@@ -55,17 +57,27 @@ public class MenuView{
 				   else 
 					   continue;
 			   default:
-				   System.out.println("메뉴를 다시 선택해주세요!!!!");
+				   System.out.println("해당하는 메뉴가 없습니다. 메뉴를 다시 선택해주세요.");
+				   
 
 		   }//switch문끝
 		   
 
 		 }//while문끝
-	     if(today == period) {
-	    	 SuccessView.printMessage(null);
+	     if(today == period+1) {
+	    	 System.out.println(today);
+	    	 System.out.println(period+1);
+	    	 SuccessView.printFin();
 	     }
 
 	}//메소드끝
+	public void inputDetail() {
+		System.out.println("선택하려는 종목의 이름을 입력하세요. ");
+		String stockName = sc.nextLine();
+		controller.detail(stockName);
+		new BuySellView(stockName);
+		
+	}
 
 
 

@@ -5,14 +5,17 @@ package mvc.dto;
 
 public class Stock {
     private int stockSeq;
+    private String stockCode;
     private String stockName;
     private int price;
     private int amount;
+	private String related;
+	private int periodRatio;
     
     
     public Stock() {};
-    public Stock(int  stockSeq, int amount) {
-    	this.stockSeq =stockSeq;
+    public Stock(String stockName, int amount) {
+    	this.stockName =stockName;
     	this.amount = amount;
     }
     
@@ -49,8 +52,10 @@ public class Stock {
 	}
 	@Override
 	public String toString() {
-		return "Stock [stockSeq=" + stockSeq + ", stockName=" + stockName + ", price=" + price + ", amount=" + amount
-				+ "]";
+		return stockCode + " | " + stockName + "|" + price + "|" + "|" + amount + "|" + related+ "|" + periodRatio;
+	}
+	public String toString(int i) {
+		return stockCode + " | " + stockName + "|" + price ;
 	}
 
 

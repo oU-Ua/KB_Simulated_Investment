@@ -6,6 +6,7 @@ import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 import mvc.service.StockService;
 import mvc.service.StockServiceImpl;
+import mvc.view.BuySellView;
 import mvc.view.FailView;
 import mvc.view.MenuView;
 import mvc.view.SuccessView;
@@ -20,6 +21,8 @@ import mvc.view.SuccessView;
 
 public class StockController {
     private StockService service = StockServiceImpl.getInstance();
+	public int seedmoney;
+	public int balance = seedmoney;
 
     /**
      * 종목 조회 - 전체 주식 목록 출력 
@@ -33,7 +36,7 @@ public class StockController {
 		if(service.stockUserAll().isEmpty())
 			FailView.errorMessage("매수한 주식이 없습니다.");  // exception처리를 하는게 좋을까요?
 		else
-		SuccessView.printUser(service.stockUserAll());
+		SuccessView.printUser(service.stockUserAll(), balance);
 		
 	}
  
@@ -46,13 +49,15 @@ public class StockController {
      */
     public void buy(Stock stock) {
     	try {
-    		service.stockBuy(stock);
+    		service.stockBuy(stock, balance);
     		SuccessView.printMessage("매수하였습니다.");
     	}catch( BuyingBalanceException e) {
         	FailView.errorMessage(e.getMessage());
+        	new BuySellView(stock.getStockName());
         } catch (SearchNotFoundException e) {
 			// TODO Auto-generated catch block
         	FailView.errorMessage(e.getMessage());
+        	new BuySellView(stock.getStockName());
 		}
     	
     }
@@ -65,12 +70,14 @@ public class StockController {
      */
     public void sell(Stock stock)  {
     	try {
-    		service.stockSell(stock);
+    		service.stockSell(stock, balance);
     		SuccessView.printMessage("매도하였습니다.");
     	}catch(SearchNotFoundException e) {
     		FailView.errorMessage(e.getMessage());
+    		new BuySellView(stock.getStockName());
     	}catch(SellingAmountException e) {
         	FailView.errorMessage(e.getMessage());
+        	new BuySellView(stock.getStockName());
         }
     	
     }
@@ -89,6 +96,14 @@ public class StockController {
 	public void headline(int day) {
 		// TODO Auto-generated method stub
 		
+	}
+	public void detail(String stockName) {
+		try {
+			Stock stock = service.searchBystockName(stockName);
+			SuccessView.printDetail(stock);
+		}catch(SearchNotFoundException e) {
+			
+		}
 	}
     
 }

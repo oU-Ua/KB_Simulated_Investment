@@ -3,7 +3,6 @@ package mvc.view;
 import java.util.List;
 
 import mvc.dto.Stock;
-import mvc.dto.User;
 import mvc.dto.UserStock;
 
 /**
@@ -17,30 +16,36 @@ public class SuccessView {
      * @param list
      */
     public static void printAll(List<Stock> list){
-		System.out.println("******  총 ("+list.size()+")개의 주식 종목이 있습니다. *****************");
+		System.out.println("**********"+list.size()+"개의 주식 종목이 있습니다. **********");
         for(Stock st : list) {
-           System.out.println(st);
+           System.out.println(st.toString(0));
         }
-
-		System.out.println();
+        System.out.println();
     }
+	public static void printDetail(Stock stock) {
+		System.out.println(stock.toString());
+		System.out.println();
+	}
+
+	
     /**
      * 전달된 배열을 출력 (사용자의 주식 검색 결과)
      * @param user
      */
-    public static void printUser(List<UserStock> user){
+    public static void printUser(List<UserStock> user,int balance){
 		System.out.println("****** 현재 보유하고 있는 주식은 ("+user.size()+")개입니다. *****************");
         for(UserStock st : user) {
            System.out.println(st);
         }
-        System.out.println("남아있는 잔고는 "+User.balance+"입니다.");
+        System.out.println("남아있는 잔고는 "+balance+"입니다.");
 
 		System.out.println();
     }
 
     
-    public static void printSearchByModelNo(Stock electronics) {
-        System.out.println(electronics +"\n");
+    public static void printFin() {
+        System.out.println("모의투자가 종료되었습니다.");
+        System.out.println();
     }
 
     /**
@@ -50,6 +55,11 @@ public class SuccessView {
     public static void printMessage(String message) {
          System.out.println(message+"\n");
     }
+    /**
+     * detail 출출력 
+     * @param stockDetail
+     */
+
 
     
 }

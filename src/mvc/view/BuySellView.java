@@ -7,13 +7,13 @@ import mvc.controller.StockController;
 public class BuySellView {
 	Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController();
-	public BuySellView() {
+	public BuySellView(String stockName) {
 		System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로  4. 장종료 ");
 		int menu = sc.nextInt();
 		if(menu ==1)
-			this.inputBuy();
+			this.inputBuy(stockName);
 		else if(menu==2)
-			this.inputSell();
+			this.inputSell(stockName);
 		else if(menu==3) 
 			this.back();
 		else if(menu ==4) 
@@ -28,12 +28,10 @@ public class BuySellView {
 	/**
 	  매수하기 위해 매수하려는 종목을 키보드 입력처리하는 메소드
 	 */
-	public void inputBuy(){
-		System.out.println("매수하려는 종목을 입력하세요. ");
-		int stockseq = sc.nextInt();
+	public void inputBuy(String stockName){
 		System.out.println("얼마나 매수하시겠습니까?");
 		int amountBuy = sc.nextInt();
-		controller.buy( new Stock(stockseq , amountBuy) );
+		controller.buy( new Stock(stockName , amountBuy) );
 
 
 
@@ -43,14 +41,12 @@ public class BuySellView {
 	/**
 	  모델번호에 해당하는 설명을 수정하기 위해 키보드 입력처리하는 메소드
 	 */
-	public void inputSell(){
-		System.out.print("매도하려는 종목을 입력하세요. ");
-		int stockseq = sc.nextInt();
+	public void inputSell(String stockName){
 
 
 		System.out.print("얼마나 매도하시겠습니까?");
-		int amountSell = Integer.parseInt(sc.nextLine());
-		controller.sell( new Stock(stockseq , amountSell) );
+		int amountSell = sc.nextInt();
+		controller.sell( new Stock(stockName , amountSell) );
 	}
 
 }
