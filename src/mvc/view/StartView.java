@@ -3,6 +3,7 @@ package mvc.view;
 import java.util.Scanner;
 
 import mvc.controller.StockController;
+import mvc.exception.PeriodInexOutException;
 
 class StartView {
 	static Scanner sc= new Scanner(System.in);
@@ -32,7 +33,9 @@ class StartView {
 				} catch (NumberFormatException e) {
 					System.out.println("period"+e.getMessage());
 					System.out.println("기간은 숫자로만 설정할 수 있습니다. 다시 입력해주세요.");
-					inputPeriod();
+//					inputPeriod();
+				} catch (PeriodInexOutException e) {
+					FailView.errorMessage(e.getMessage());
 				}
                
                 //투자기간에 대한 제한 ?
@@ -51,11 +54,11 @@ class StartView {
         
     }
 
-	public static int inputPeriod() {
+	public static int inputPeriod() throws PeriodInexOutException{
 		 System.out.println("\n투자기간을 입력하세요. (단위 : 일)");
          int  period = Integer.parseInt(sc.nextLine());
-		if(period > 30 && period <1) {
-			
+		if(period > 30 || period <1) {
+			throw new PeriodInexOutException();
 		}
 		return period;
 		
