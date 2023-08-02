@@ -26,11 +26,18 @@ public class Stock {
 		this.price = price;
 		this.amount = amount;
 	}
+
 	public int getStockSeq() {
 		return stockSeq;
 	}
 	public void setStockSeq(int stockSeq) {
 		this.stockSeq = stockSeq;
+	}
+	public String getStockCode() {
+		return stockCode;
+	}
+	public void setStockCode(String stockCode) {
+		this.stockCode = stockCode;
 	}
 	public String getStockName() {
 		return stockName;
@@ -49,6 +56,18 @@ public class Stock {
 	}
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	public String getRelated() {
+		return related;
+	}
+	public void setRelated(String related) {
+		this.related = related;
+	}
+	public int getPeriodRatio() {
+		return periodRatio;
+	}
+	public void setPeriodRatio(int periodRatio) {
+		this.periodRatio = periodRatio;
 	}
 	@Override
 	public String toString() {
