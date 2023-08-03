@@ -8,6 +8,7 @@ import mvc.dao.StockDAOImpl;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
+import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 
@@ -85,9 +86,17 @@ public class StockServiceImpl implements StockService {
 
 		for(UserStock us : userlist) {
 			if(us.getStockName().equals(us.getStockName())) {
-//				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*amountBuy) / (us.getAmountBuy()+amountBuy));
-				us.setAvgprice(stockDao.updateAvgPrice(us,buyStock));
-				us.setAmountBuy(us.getAmountBuy()+amountBuy);
+				
+				int updatePrice = (us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*amountBuy) / (us.getAmountBuy()+amountBuy);
+				int result = stockDao.updateAvgPrice(updatePrice, us);
+				if(result == 0){
+					throw new DMLException(us.getStockName()+"주식의 평균가가 수정되지 않았습니다. ");
+				}
+				int updateAmount = us.getAmountBuy()+amountBuy;
+				result = stockDao.updateAmountBuy(updateAmount, us);
+				if(result == 0){
+					throw new DMLException(us.getStockName()+"주식의 매수량이 수정되지 않았습니다. ");
+				}
 				balance = balance - buyStock.getPrice()*amountBuy;
 				return balance;
 			}
@@ -99,7 +108,8 @@ public class StockServiceImpl implements StockService {
 		 * insert into User_Stock values (?,?,?)
 		 * stock_seq, amount_buy, avg_price
 		 */
-		userlist.add(new UserStock(buyStock.getStockSeq(), buyStock.getStockSeq() ,buyStock.getStockName(), amountBuy , buyStock.getPrice()));
+		//userlist.add(new UserStock(buyStock.getStockSeq(), buyStock.getStockSeq() ,buyStock.getStockName(), amountBuy , buyStock.getPrice()));
+		int result = stockDao.insertUserstock(buyStock, amountBuy);
 		balance = balance -(buyStock.getPrice()*amountBuy);	
 		return balance;
 	}

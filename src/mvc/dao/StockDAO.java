@@ -8,5 +8,11 @@ import mvc.dto.UserStock;
 
 public interface StockDAO {
 
-	int updateAvgPrice(UserStock us, Stock buyStock);
+	int updateAvgPrice(int updatePrice, UserStock us);
+
+	int updateAmountBuy(int updateAmount, UserStock us);
+
+	int insertUserstock(Stock buyStock, int amountBuy);
+
+
 }
