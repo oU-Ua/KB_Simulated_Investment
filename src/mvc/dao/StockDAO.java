@@ -27,4 +27,5 @@ public interface StockDAO {
 	int sellStockMinusAmount(int amountSell, String stockName) throws SellingAmountException;
 
 	int sellStockDeleteUser(String stockName) throws SellingAmountException;
+	int updatePrice() throws SearchNotFoundException;
 }

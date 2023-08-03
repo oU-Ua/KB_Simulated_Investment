@@ -56,7 +56,7 @@ public interface StockService {
 	public UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException;
 
 
-	public void updatePrice();
+	public void updatePrice()throws SearchNotFoundException;
 
 
 	/**

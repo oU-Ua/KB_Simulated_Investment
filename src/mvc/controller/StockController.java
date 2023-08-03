@@ -1,7 +1,8 @@
 package mvc.controller;
 
+import java.util.List;
+
 import mvc.dto.Stock;
-import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
@@ -11,8 +12,6 @@ import mvc.view.BuySellView;
 import mvc.view.FailView;
 import mvc.view.MenuView;
 import mvc.view.SuccessView;
-
-import java.util.List;
 
 
 /**
@@ -99,7 +98,11 @@ public class StockController {
 		SuccessView.printMessage("오늘의 장이 종료되었습니다.");
 		//장이 종료되었을 때 그냥 종료만 띄울것인지 오늘 하루 log도 띄울지
 		MenuView.today++;
-		service.updatePrice();
+		try {
+			service.updatePrice();
+		} catch (SearchNotFoundException e) {
+			FailView.errorMessage(e.getMessage());
+		}
 	}
 
 

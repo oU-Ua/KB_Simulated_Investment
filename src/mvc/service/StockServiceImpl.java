@@ -201,13 +201,10 @@ public class StockServiceImpl implements StockService {
 	 * update Stock set price = (select d?)
 	 */
 	@Override
-	public void updatePrice() {
-		for(Stock st : list) {
-			/**
-			 * update Stock set price = (select ? from stock_price where stock_seq = ? ) where stock_seq = ?
-			 */
-			st.setPrice(20000);
-		}
+	public void updatePrice() throws SearchNotFoundException {
+
+		int result = stockDao.updatePrice();
+		if(result == 0) throw new SearchNotFoundException("가격이 바뀐 종목이 없습니다.");
 		
 	}
 
