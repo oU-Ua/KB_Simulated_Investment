@@ -76,8 +76,7 @@ public class MenuView{
 		System.out.println("선택하려는 종목의 이름을 입력하세요. ");
 		String stockName = sc.nextLine();
 		controller.detail(stockName);
-		new BuySellView(stockName);
-		
+
 	}
 
 
