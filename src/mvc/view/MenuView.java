@@ -48,7 +48,7 @@ public class MenuView{
 	                 System.out.println("메뉴로 돌아갑니다.");
 			   break;
 			   case "3" :
-				   controller.inputDetail();
+				   this.inputDetail();
 //				   new BuySellView(stockName);
 				   break;
 			   case "4" : 
@@ -75,12 +75,12 @@ public class MenuView{
 	     }
 
 	}//메소드끝
-//	public void inputDetail() {
-//		System.out.println("거래하려는 종목의 이름을 입력하세요. ");
-//		String stockName = sc.nextLine();
-//		controller.detail(stockName);
-//
-//	}
+	public void inputDetail() {
+		System.out.println("거래하려는 종목의 이름을 입력하세요. ");
+		String stockName = sc.nextLine();
+		controller.detail(stockName);
+
+	}
 
 
 

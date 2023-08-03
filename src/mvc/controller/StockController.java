@@ -112,18 +112,18 @@ public class StockController {
 		}
 	}
 	
-	public void inputDetail() {
-		System.out.println("거래하려는 종목의 이름을 입력하세요. ");
-		String stockName = sc.nextLine();
-		try {
-			Stock stock = service.searchBystockName(stockName);
-			SuccessView.printDetail(stock);
-			new BuySellView(stockName);
-		}catch(SearchNotFoundException e) {
-			FailView.errorMessage(e.getMessage());
-		}
-		
-	}
+//	public void inputDetail() {
+//		System.out.println("거래하려는 종목의 이름을 입력하세요. ");
+//		String stockName = sc.nextLine();
+//		try {
+//			Stock stock = service.searchBystockName(stockName);
+//			SuccessView.printDetail(stock);
+//			new BuySellView(stockName);
+//		}catch(SearchNotFoundException e) {
+//			FailView.errorMessage(e.getMessage());
+//		}
+//		
+//	}
     
 }
 
