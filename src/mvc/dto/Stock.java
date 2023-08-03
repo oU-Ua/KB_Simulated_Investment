@@ -8,70 +8,101 @@ public class Stock {
     private String stockCode;
     private String stockName;
     private int price;
-    private int amount;
 	private String related;
-	private int periodRatio;
-    
+    private int evaluation;
     
     public Stock() {};
-    public Stock(String stockName, int amount) {
-    	this.stockName =stockName;
-    	this.amount = amount;
-    }
+
     
-	public Stock(int stockSeq, String stockName, int price, int amount) {
+	public Stock(int stockSeq, String stockName, int price, int evaluation) {
 		super();
 		this.stockSeq = stockSeq;
 		this.stockName = stockName;
 		this.price = price;
-		this.amount = amount;
+		this.evaluation = evaluation;
 	}
+	
+
+	public Stock(int stockSeq, String stockCode, String stockName, int price, String related, int evaluation) {
+		super();
+		this.stockSeq = stockSeq;
+		this.stockCode = stockCode;
+		this.stockName = stockName;
+		this.price = price;
+		this.related = related;
+		this.evaluation = evaluation;
+	}
+
 
 	public int getStockSeq() {
 		return stockSeq;
 	}
+
+
 	public void setStockSeq(int stockSeq) {
 		this.stockSeq = stockSeq;
 	}
+
+
 	public String getStockCode() {
 		return stockCode;
 	}
+
+
 	public void setStockCode(String stockCode) {
 		this.stockCode = stockCode;
 	}
+
+
 	public String getStockName() {
 		return stockName;
 	}
+
+
 	public void setStockName(String stockName) {
 		this.stockName = stockName;
 	}
+
+
 	public int getPrice() {
 		return price;
 	}
+
+
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getAmount() {
-		return amount;
-	}
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
+
+
 	public String getRelated() {
 		return related;
 	}
+
+
 	public void setRelated(String related) {
 		this.related = related;
 	}
-	public int getPeriodRatio() {
-		return periodRatio;
+
+
+	public int getEvaluation() {
+		return evaluation;
 	}
-	public void setPeriodRatio(int periodRatio) {
-		this.periodRatio = periodRatio;
+
+
+	public void setEvaluation(int evaluation) {
+		this.evaluation = evaluation;
 	}
+
+
 	@Override
 	public String toString() {
-		return stockCode + " | " + stockName + "|" + price + "|" + "|" + amount + "|" + related+ "|" + periodRatio;
+		String s = "";
+		for(int i=0; i<evaluation ;i++)
+			s +="★";
+		for(int i=0; i<10-evaluation ;i++)
+			s +="☆";
+		return " 종목코드 : " +stockCode + " | 종목명 : " + stockName + "| 현재가 : " + price + "| 테마 : "  + related+ "| 종목평가 : "+s;
+		
 	}
 	public String toString(int i) {
 		return stockCode + " | " + stockName + "|" + price ;

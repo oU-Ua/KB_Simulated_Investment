@@ -37,7 +37,7 @@ public class MenuView{
 	    	 System.out.println("balance : "+ balance);
 //	    	 System.out.pirntln(controller.headline(today)); headline을 어떻게 보여줄 지 모르겠어서 일단 함수형태로 생각해봤어요 
            System.out.println("----------------------------------- Menu -----------------------------------------");
-           System.out.println("1. 종목 조회    2. 보유주식 조회     3. 장 종료      9. 프로그램 종료");
+           System.out.println("1. 종목 조회    2. 보유주식 조회   3.매수/매도    4. 장 종료      9. 프로그램 종료");
 		   System.out.println("----------------------------------------------------------------------------------");
 		   System.out.print("메뉴선택 > ");
 
@@ -45,25 +45,26 @@ public class MenuView{
 		   switch(menu){
 			   case "1" : 
 				   controller.stockAll();
-				   this.inputDetail(balance);
 				   break;
 			   case "2" :
 	                 controller.stockUser(balance);
 	                 System.out.println("메뉴로 돌아갑니다.");
 			   break;
 			   case "3" : 
+	                 this.inputDetail(balance);
+				   break;
+			   case "4" : 
 	                 controller.finMarket();
 				   break;
 			   case "9" : 
 				   System.out.println("지금 " + today +"일차입니다. 정말로 프로그램을 종료하시겠습니까? (Y/N)");
-				   if(sc.nextLine().equals("Y")||sc.nextLine().equals("y"))
+				   String exitMenu = sc.nextLine();
+				   if(exitMenu.equals("Y")||exitMenu.equals("y"))
 					   System.exit(0);
 				   else 
 					   continue;
 			   default:
 				   System.out.println("해당하는 메뉴가 없습니다. 메뉴를 다시 선택해주세요.");
-				   
-
 		   }//switch문끝
 		   
 

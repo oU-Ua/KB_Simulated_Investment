@@ -32,7 +32,7 @@ public interface StockService {
      *     SearchNotFoundException 예외발생
      *     있으면 전자제품 모델번호에 해당하는 설명을 수정한다.
      */
-    public int stockBuy(Stock stock, int balance) throws BuyingBalanceException,SearchNotFoundException;
+    public int stockBuy(String stockName, int amountBuy, int balance) throws BuyingBalanceException,SearchNotFoundException;
     
     
     /**
@@ -44,7 +44,7 @@ public interface StockService {
      *     SearchNotFoundException 예외발생
      *     있으면 전자제품 모델번호에 해당하는 정보를 삭제한다.
      */
-    public int stockSell(Stock stock, int balance) throws SellingAmountException,SearchNotFoundException;
+    public int stockSell(String stockName, int amountSell, int balance) throws SellingAmountException,SearchNotFoundException;
 
 
 //	public Stock stockDetail(String stockName) throws SearchNotFoundException;
@@ -54,6 +54,9 @@ public interface StockService {
 	
 	
 	public UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException;
+
+
+	public void updatePrice();
 
 
 	
