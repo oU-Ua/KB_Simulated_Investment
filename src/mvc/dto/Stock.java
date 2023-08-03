@@ -14,12 +14,12 @@ public class Stock {
     public Stock() {};
 
     
-	public Stock(int stockSeq, String stockName, int price, int evaluation) {
+	public Stock(int stockSeq, String stockName, int price) {
 		super();
 		this.stockSeq = stockSeq;
 		this.stockName = stockName;
 		this.price = price;
-		this.evaluation = evaluation;
+
 	}
 	
 
@@ -32,6 +32,8 @@ public class Stock {
 		this.related = related;
 		this.evaluation = evaluation;
 	}
+
+
 
 
 	public int getStockSeq() {

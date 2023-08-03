@@ -25,7 +25,13 @@ public class UserStock {
 	}
 
 
+	public int getStockCode() {
+		return stockCode;
+	}
 
+	public void setStockCode(int stockCode) {
+		this.stockCode = stockCode;
+	}
 
 	public int getStockSeq() {
 		return stockSeq;
