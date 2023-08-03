@@ -5,6 +5,6 @@ package mvc.common;
 public interface DBProperties {
 	public static final String DRIVER_NAME ="oracle.jdbc.driver.OracleDriver";
 	String URL="jdbc:oracle:thin:@localhost:1521:XE";
-	String USER_ID="scott";
-	String USER_PASS="TIGER";
+	String USER_ID="PR";
+	String USER_PASS="PR";
 }

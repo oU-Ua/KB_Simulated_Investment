@@ -9,10 +9,18 @@ import mvc.exception.SearchNotFoundException;
 
 public interface StockDAO {
 
-	int updateAvgPrice(UserStock us, Stock buyStock);
-
     List<Stock> stockAll() throws SearchNotFoundException;
 
 
     List<UserStock> stockUserAll() throws SearchNotFoundException;
+
+	int updateAvgPrice(int updatePrice, String stockname) throws SearchNotFoundException;
+
+	int updateAmountBuy(int updateAmount, UserStock us) throws SearchNotFoundException;
+
+	int insertUserstock(Stock buyStock, int amountBuy) throws SearchNotFoundException;
+	
+	Stock searchBystockName(String stock_name) throws SearchNotFoundException;
+	
+	UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException;
 }

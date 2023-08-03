@@ -8,9 +8,9 @@ import mvc.dao.StockDAOImpl;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
+import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
-import mvc.view.FailView;
 
 
 /**
@@ -74,40 +74,56 @@ public class StockServiceImpl implements StockService {
 	 */
 	@Override
 	public int stockBuy(String stockName, int amountBuy, int balance) throws BuyingBalanceException, SearchNotFoundException {
+
 		//1.예외처리 : 매수하려는 양이 현재 잔고보다 많을때 
 		Stock buyStock = searchBystockName(stockName); // 구매하려는 주식의 가격을 알기 위해서 주식list에서 주식 찾기
-		
+
 		if(buyStock.getPrice()*amountBuy > balance) {
 
 			throw new BuyingBalanceException();}
-
 		//2.이미 userstock에 있는경우 : amount값만 증가.
 		//이 부분 dao => price, amount update
 		/**
 		 * update UserStock set avg_price =? , amount_buy =? where stock_seq =?
 		 */
 
-		for(UserStock us : userlist) {
-			if(us.getStockName().equals(us.getStockName())) {
-//				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*amountBuy) / (us.getAmountBuy()+amountBuy));
-				us.setAvgprice(stockDao.updateAvgPrice(us,buyStock));
-				us.setAmountBuy(us.getAmountBuy()+amountBuy);
-				balance = balance - buyStock.getPrice()*amountBuy;
-				return balance;
+		UserStock us = stockDao.searchByUserstockName(stockName);
+		if(us.getStockSeq()!=0) {
+
+			int updatePrice = (us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*amountBuy) / (us.getAmountBuy()+amountBuy);
+
+			int result = stockDao.updateAvgPrice(updatePrice, stockName);
+			if(result == 0){
+				throw new BuyingBalanceException(stockName+"주식의 평균가가 수정되지 않았습니다. ");
+			}
+			int updateAmount = us.getAmountBuy()+amountBuy;
+			result = stockDao.updateAmountBuy(updateAmount, us);
+			if(result == 0){
+				throw new BuyingBalanceException(stockName+"주식의 매수량이 수정되지 않았습니다. ");
+			}
+			balance = balance - buyStock.getPrice()*amountBuy;
+			return balance;
+		}else {
+			//3. userstock에 없는 경우 : userstock에 새로 추가
+			//이부분 dao => insert UserStock.
+			/**
+			 * insert into User_Stock values (?,?,?)
+			 * stock_seq, amount_buy, avg_price
+			 */
+			//userlist.add(new UserStock(buyStock.getStockSeq(), buyStock.getStockSeq() ,buyStock.getStockName(), amountBuy , buyStock.getPrice()));
+			int result = stockDao.insertUserstock(buyStock, amountBuy);
+
+			if(result == 0){
+				throw new BuyingBalanceException(buyStock.getStockName()+"주식의 매수량이 수정되지 않았습니다. ");
 			}
 
+
 		}
-		//3. userstock에 없는 경우 : userstock에 새로 추가
-		//이부분 dao => insert UserStock.
-		/**
-		 * insert into User_Stock values (?,?,?)
-		 * stock_seq, amount_buy, avg_price
-		 */
-		userlist.add(new UserStock(buyStock.getStockSeq(), buyStock.getStockSeq() ,buyStock.getStockName(), amountBuy , buyStock.getPrice()));
+
 		balance = balance -(buyStock.getPrice()*amountBuy);	
 		return balance;
 	}
-	
+
 	/**
 	 * 입력한 종목이 있는 종목인지 확인
 	 * @param stock_seq
@@ -120,12 +136,10 @@ public class StockServiceImpl implements StockService {
  	 */
 
 	public Stock searchBystockName(String stock_name) throws SearchNotFoundException {
-		for(Stock st : list) {
-			if(st.getStockName().equals(stock_name))
-				return st;
-		}
 		
-		throw new SearchNotFoundException(stock_name+"는 없는 종목입니다.");
+		Stock stock = stockDao.searchBystockName(stock_name);
+		
+		return stock;
 
 	}
 	
@@ -191,6 +205,9 @@ public class StockServiceImpl implements StockService {
 		
 	}
 
+
+}
+
 //	@Override
 //	public Stock stockDetail(String stockName) throws SearchNotFoundException {
 //		Stock select = new Stock();
@@ -203,4 +220,4 @@ public class StockServiceImpl implements StockService {
 
 
     
-} // 클래스 끝 
+ // 클래스 끝 
