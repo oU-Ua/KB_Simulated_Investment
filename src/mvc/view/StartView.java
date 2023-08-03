@@ -20,19 +20,22 @@ class StartView {
             }
             else if(start.equals("Y")||start.equals("y")) {
 
-            	int seedMoney = 0;
+
             	int period =0;
-            	while(seedMoney == 0) {
+            	int balance;
+            	while(true) {
             		try {
-            			seedMoney = inputSeedMoney();
+            			balance = inputSeedMoney();
+            			break;
             		} catch (NumberFormatException e) {
             			System.out.println("시드머니는 숫자로만 설정할 수 있습니다. 다시 입력해주세요.");
             		}
             	}
 
-            	while(period == 0) {
+            	while(true) {
             		try {
             			period = inputPeriod();
+            			break;
             		} catch (NumberFormatException e) {
             			System.out.println("기간은 숫자로만 설정할 수 있습니다. 다시 입력해주세요.");
             		} catch (PeriodInexOutException e) {
@@ -42,9 +45,10 @@ class StartView {
                 //투자기간에 대한 제한 ?
             	System.out.println();
                 MenuView.period = period;
-                StockController.seedmoney = seedMoney;
+                MenuView.seedmoney = balance;
+                
                 System.out.println();
-            	 MenuView mv = new MenuView(); // 전역변수 초기화, 생성자 호출 
+            	 MenuView mv = new MenuView(balance); // 전역변수 초기화, 생성자 호출 
                  mv.printMenu();
                  break;
             }

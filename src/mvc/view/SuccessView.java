@@ -10,6 +10,7 @@ import mvc.dto.UserStock;
  */
 
 public class SuccessView {
+	public static final double AVG_RATIO = -100.00;
 
     /**
      * 전달된 배열을 출력(전체 검색 결과)
@@ -43,9 +44,17 @@ public class SuccessView {
     }
 
     
-    public static void printFin() {
+    public static void printFin(int balance, int seedmoney) {
         System.out.println("모의투자가 종료되었습니다.");
-        System.out.println();
+        System.out.println(balance);
+        System.out.println(seedmoney);
+
+       double userRatio = ((double)(balance - seedmoney) / (double)seedmoney)*100;
+        System.out.println("사용자의 수익률은 "+userRatio+"% 입니다.");
+        if(userRatio > AVG_RATIO) 
+        	System.out.println("투자왕");
+        if(userRatio < AVG_RATIO) 
+        	System.out.println("분발 ~");
     }
 
     /**
