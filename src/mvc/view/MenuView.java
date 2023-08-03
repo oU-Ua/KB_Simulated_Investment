@@ -11,14 +11,16 @@ import mvc.dto.Stock;
 */
 public class MenuView{
 	
+	
+
 	public MenuView() {}
-	public MenuView(int period,int balance) {
-		this.period = period;
-		this.seedmoney = balance;
+	public MenuView(int balance) {
+		this.balance = balance;
 		
 	}
+	public int balance;
 	public static int period;
-    public static int seedmoney;
+    public static int seedmoney = 0;
 	Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController(); // 전역변수 초기화, 생성자 호출 
 	public static int today =1;
@@ -32,6 +34,7 @@ public class MenuView{
 	     while(today < period+1){
 	    	 System.out.println("\n\n");
 	    	 System.out.println(today+"일차 장 \n");
+	    	 System.out.println("balance : "+ balance);
 //	    	 System.out.pirntln(controller.headline(today)); headline을 어떻게 보여줄 지 모르겠어서 일단 함수형태로 생각해봤어요 
            System.out.println("----------------------------------- Menu -----------------------------------------");
            System.out.println("1. 종목 조회    2. 보유주식 조회     3. 장 종료      9. 프로그램 종료");
@@ -42,10 +45,10 @@ public class MenuView{
 		   switch(menu){
 			   case "1" : 
 				   controller.stockAll();
-				   this.inputDetail();
+				   this.inputDetail(balance);
 				   break;
 			   case "2" :
-	                 controller.stockUser();
+	                 controller.stockUser(balance);
 	                 System.out.println("메뉴로 돌아갑니다.");
 			   break;
 			   case "3" : 
@@ -66,16 +69,15 @@ public class MenuView{
 
 		 }//while문끝
 	     if(today == period+1) {
-	    	 System.out.println(today);
-	    	 System.out.println(period+1);
-	    	 SuccessView.printFin();
+	    	 SuccessView.printFin(balance, seedmoney);
+	    	 System.exit(0);
 	     }
 
 	}//메소드끝
-	public void inputDetail() {
+	public void inputDetail(int balance) {
 		System.out.println("선택하려는 종목의 이름을 입력하세요. ");
 		String stockName = sc.nextLine();
-		controller.detail(stockName);
+		controller.detail(stockName, balance);
 
 	}
 

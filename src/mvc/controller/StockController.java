@@ -21,8 +21,7 @@ import mvc.view.SuccessView;
 
 public class StockController {
     private StockService service = StockServiceImpl.getInstance();
-	public static int seedmoney;
-	public static int balance = seedmoney;
+    
 
     /**
      * 종목 조회 - 전체 주식 목록 출력 
@@ -31,7 +30,7 @@ public class StockController {
 		service.stockAll();
 		SuccessView.printAll(service.stockAll());
     }
-	public void stockUser() {
+	public void stockUser(int balance) {
 		service.stockUserAll();
 		if(service.stockUserAll().isEmpty())
 			FailView.errorMessage("매수한 주식이 없습니다.");  // exception처리를 하는게 좋을까요?
@@ -47,18 +46,20 @@ public class StockController {
      * @param stock
      * @throws SellingAmountException 
      */
-    public void buy(Stock stock) {
+    public void buy(Stock stock,int balance) {
     	try {
     		System.out.println(balance);
-    		service.stockBuy(stock, balance);
+    		balance = service.stockBuy(stock, balance);
     		SuccessView.printMessage("매수하였습니다.");
+    		MenuView mv = new MenuView(balance);
+    		mv.printMenu();
     	}catch( BuyingBalanceException e) {
         	FailView.errorMessage(e.getMessage());
-        	new BuySellView(stock.getStockName());
+        	new BuySellView(stock.getStockName(), balance);
         } catch (SearchNotFoundException e) {
 			// TODO Auto-generated catch block
         	FailView.errorMessage(e.getMessage());
-        	detail(stock.getStockName());
+        	detail(stock.getStockName(),balance);
 		}
     	
     }
@@ -69,17 +70,19 @@ public class StockController {
      * @throws SearchNotFoundException 
      * @throws SellingAmountException 
      */
-    public void sell(Stock stock)  {
+    public void sell(Stock stock, int balance)  {
     	try {
     		System.out.println(balance);
-    		service.stockSell(stock, balance);
+    		balance = service.stockSell(stock, balance);
     		SuccessView.printMessage("매도하였습니다.");
+    		MenuView mv = new MenuView(balance);
+    		mv.printMenu();
     	}catch(SearchNotFoundException e) {
     		FailView.errorMessage(e.getMessage());
-    		new BuySellView(stock.getStockName());
+    		new BuySellView(stock.getStockName(),balance);
     	}catch(SellingAmountException e) {
         	FailView.errorMessage(e.getMessage());
-        	new BuySellView(stock.getStockName());
+        	new BuySellView(stock.getStockName(),balance);
         }
     	
     }
@@ -99,11 +102,11 @@ public class StockController {
 		// TODO Auto-generated method stub
 		
 	}
-	public void detail(String stockName) {
+	public void detail(String stockName, int balance) {
 		try {
 			Stock stock = service.searchBystockName(stockName);
 			SuccessView.printDetail(stock);
-			new BuySellView(stockName);
+			new BuySellView(stockName,balance);
 		}catch(SearchNotFoundException e) {
 			FailView.errorMessage(e.getMessage());
 		}

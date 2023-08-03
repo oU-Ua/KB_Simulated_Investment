@@ -64,7 +64,7 @@ public class StockServiceImpl implements StockService {
 	 * 입력한 종목을 매수
 	 */
 	@Override
-	public void stockBuy(Stock stock, int balance) throws BuyingBalanceException, SearchNotFoundException {
+	public int  stockBuy(Stock stock, int balance) throws BuyingBalanceException, SearchNotFoundException {
 		//1.예외처리 : 매수하려는 양이 현재 잔고보다 많을때 
 		Stock buyStock = searchBystockName(stock.getStockName()); // 구매하려는 주식의 가격을 알기 위해서 주식list에서 주식 찾기
 		
@@ -78,15 +78,16 @@ public class StockServiceImpl implements StockService {
 			if(us.getStockSeq()==stock.getStockSeq()) {
 				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*stock.getAmount()) / (us.getAmountBuy()+stock.getAmount()));
 				us.setAmountBuy(us.getAmountBuy()+stock.getAmount());
-				StockController.balance = balance - stock.getPrice()*stock.getAmount();
-				return;
+				balance = balance - stock.getPrice()*stock.getAmount();
+				return balance;
 			}
 
 		}
 		//3. userstock에 없는 경우 : userstock에 새로 추가 
 		userlist.add(new UserStock(buyStock.getStockSeq(), buyStock.getStockName(), stock.getAmount(),stock.getPrice()));
-		balance = balance -buyStock.getPrice()*stock.getAmount();	
-		
+		balance = balance -(buyStock.getPrice()*stock.getAmount());	
+		System.out.println(balance);
+		return balance;
 	}
 	
 	/**
@@ -122,7 +123,7 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
-	public void stockSell(Stock stock, int balance) throws SellingAmountException, SearchNotFoundException {
+	public int stockSell(Stock stock, int balance) throws SellingAmountException, SearchNotFoundException {
 			UserStock sellStock = searchByUserstockName(stock.getStockName());
 		//1.예외처리 
 		if(stock.getAmount() > sellStock.getAmountBuy())
@@ -136,8 +137,8 @@ public class StockServiceImpl implements StockService {
 		else if(stock.getAmount() == sellStock.getAmountBuy())
 			userlist.remove(userlist.indexOf(sellStock));
 		Stock select = searchBystockName(stock.getStockName());
-		StockController.balance = balance + select.getPrice()*stock.getAmount();		
-		
+		balance = balance + select.getPrice()*stock.getAmount();		
+		return balance;
 		
 	}
 
