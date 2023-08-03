@@ -10,6 +10,7 @@ import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
+import mvc.view.FailView;
 
 
 /**
@@ -49,8 +50,8 @@ public class StockServiceImpl implements StockService {
 	 * @return
 	 */
 	@Override
-	public List<Stock> stockAll() {
-		
+	public List<Stock> stockAll() throws SearchNotFoundException {
+		list =this.stockDao.stockAll();
 		return list;
 	}
 
@@ -60,9 +61,12 @@ public class StockServiceImpl implements StockService {
 	 * @return
 	 */
 	@Override
-	public List<UserStock> stockUserAll() {
-		
-		return userlist;
+	public List<UserStock> stockUserAll() throws SearchNotFoundException {
+		userlist =this.stockDao.stockUserAll();
+
+		if(userlist.isEmpty())
+			throw new SearchNotFoundException("매수한 주식이 없습니다.");
+		else return userlist;
 	}
 	
 	/**

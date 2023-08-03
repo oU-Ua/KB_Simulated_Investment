@@ -1,6 +1,7 @@
 package mvc.controller;
 
 import mvc.dto.Stock;
+import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
@@ -11,6 +12,7 @@ import mvc.view.FailView;
 import mvc.view.MenuView;
 import mvc.view.SuccessView;
 
+import java.util.List;
 
 
 /**
@@ -27,16 +29,21 @@ public class StockController {
      * 종목 조회 - 전체 주식 목록 출력 
      */
     public void stockAll() {
-		service.stockAll();
-		SuccessView.printAll(service.stockAll());
-    }
+		try {
+			List<Stock> stockList = service.stockAll();
+			SuccessView.printAll(stockList);
+		} catch (SearchNotFoundException e) {
+			FailView.errorMessage(e.getMessage());	}
+	}
 	public void stockUser(int balance) {
-		service.stockUserAll();
-		if(service.stockUserAll().isEmpty())
-			FailView.errorMessage("매수한 주식이 없습니다.");  // exception처리를 하는게 좋을까요?
-		else
-		SuccessView.printUser(service.stockUserAll(),balance);
-		
+		try {
+			SuccessView.printUser(service.stockUserAll(),balance);
+
+		}catch (SearchNotFoundException e){
+			FailView.errorMessage(e.getMessage());
+		}
+
+
 	}
  
      
