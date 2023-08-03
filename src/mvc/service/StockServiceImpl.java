@@ -3,7 +3,8 @@ package mvc.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import mvc.controller.StockController;
+import mvc.dao.StockDAO;
+import mvc.dao.StockDAOImpl;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
@@ -19,11 +20,13 @@ public class StockServiceImpl implements StockService {
 
 	
 	private static StockService instance = new StockServiceImpl(); 
-    private static final int MAX_SIZE=10; // 매수할 수 있는 주식의 한계를 정할까요 ?
+	private StockDAO boardDao = StockDAOImpl.getInstance() ;
     List<Stock> list = new ArrayList<Stock>();
 //    List<Stock> list = stockDao.selectAll();
     List<UserStock> userlist = new ArrayList<UserStock>();
 //  List<UserStock> user = userStockDao.selectUserAll();    
+    
+    
     
     
     /** 
@@ -82,7 +85,8 @@ public class StockServiceImpl implements StockService {
 
 		for(UserStock us : userlist) {
 			if(us.getStockName().equals(us.getStockName())) {
-				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*amountBuy) / (us.getAmountBuy()+amountBuy));
+//				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*amountBuy) / (us.getAmountBuy()+amountBuy));
+
 				us.setAmountBuy(us.getAmountBuy()+amountBuy);
 				balance = balance - buyStock.getPrice()*amountBuy;
 				return balance;
