@@ -39,11 +39,23 @@ public class StockServiceImpl implements StockService {
     private StockServiceImpl() {
       
     }
+
+	/**
+	 * 1. 종목조회 클릭시
+	 * select * from Stock
+	 * @return
+	 */
 	@Override
 	public List<Stock> stockAll() {
 		
 		return list;
 	}
+
+	/**
+	 * 2. 보유주식 조회 클릭시
+	 * select * from user_stock join stock using (stock_seq)
+	 * @return
+	 */
 	@Override
 	public List<UserStock> stockUserAll() {
 		
@@ -51,10 +63,10 @@ public class StockServiceImpl implements StockService {
 	}
 	
 	/**
-	 * 입력한 종목을 매수
+	 * 3. 입력한 종목을 매수
 	 */
 	@Override
-	public int  stockBuy(String stockName, int amountBuy, int balance) throws BuyingBalanceException, SearchNotFoundException {
+	public int stockBuy(String stockName, int amountBuy, int balance) throws BuyingBalanceException, SearchNotFoundException {
 		//1.예외처리 : 매수하려는 양이 현재 잔고보다 많을때 
 		Stock buyStock = searchBystockName(stockName); // 구매하려는 주식의 가격을 알기 위해서 주식list에서 주식 찾기
 		
@@ -63,6 +75,11 @@ public class StockServiceImpl implements StockService {
 			throw new BuyingBalanceException();}
 
 		//2.이미 userstock에 있는경우 : amount값만 증가.
+		//이 부분 dao => price, amount update
+		/**
+		 * update UserStock set avg_price =? , amount_buy =? where stock_seq =?
+		 */
+
 		for(UserStock us : userlist) {
 			if(us.getStockName().equals(us.getStockName())) {
 				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*amountBuy) / (us.getAmountBuy()+amountBuy));
@@ -72,7 +89,12 @@ public class StockServiceImpl implements StockService {
 			}
 
 		}
-		//3. userstock에 없는 경우 : userstock에 새로 추가 
+		//3. userstock에 없는 경우 : userstock에 새로 추가
+		//이부분 dao => insert UserStock.
+		/**
+		 * insert into User_Stock values (?,?,?)
+		 * stock_seq, amount_buy, avg_price
+		 */
 		userlist.add(new UserStock(buyStock.getStockSeq(), buyStock.getStockSeq() ,buyStock.getStockName(), amountBuy , buyStock.getPrice()));
 		balance = balance -(buyStock.getPrice()*amountBuy);	
 		return balance;
@@ -84,6 +106,11 @@ public class StockServiceImpl implements StockService {
 	 * @return
 	 * @throws SearchNotFoundException
 	 */
+
+	/**
+	 *select * from Stock where stock_name =?
+ 	 */
+
 	public Stock searchBystockName(String stock_name) throws SearchNotFoundException {
 		for(Stock st : list) {
 			if(st.getStockName().equals(stock_name))
@@ -99,6 +126,7 @@ public class StockServiceImpl implements StockService {
 	 * @param stock_seq
 	 * @return
 	 * @throws SearchNotFoundException
+	 *select * from User_Stock where stock_seq = (select stock_seq from stock where stock_name = ?)
 	 */
 	public UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException {
 		for(UserStock us : userlist) {
@@ -113,14 +141,24 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public int stockSell(String stockName, int amountSell, int balance) throws SellingAmountException, SearchNotFoundException {
 			UserStock sellStock = searchByUserstockName(stockName);
-		//1.예외처리 
+
+		//1.예외처리
+
 		if(amountSell > sellStock.getAmountBuy())
 			throw new SellingAmountException();
-		
+
+
+		/**
+		 *update User_Stock set amount_buy =? where stock_seq = (select stock_seq from stock where stock_name = ?)
+		 */
 		//2.매도하려는 주식량 <갖고있는 주식량 : amount값만 감소.
 		if(amountSell< sellStock.getAmountBuy()) 
 				sellStock.setAmountBuy(sellStock.getAmountBuy()-amountSell);
-		
+
+		/**
+		 *delete from User_Stock where stock_seq = (select stock_seq from stock where stock_name = ?)
+		 */
+
 		//3. 매도하려는 주식량 = 갖고있는 주식량 : user에서 삭제
 		else if(amountSell == sellStock.getAmountBuy())
 			userlist.remove(userlist.indexOf(sellStock));
@@ -130,9 +168,16 @@ public class StockServiceImpl implements StockService {
 		
 	}
 
+	/**
+	 * 요일이 바뀔때마다 주가를 변경한다.
+	 * update Stock set price = (select d?)
+	 */
 	@Override
 	public void updatePrice() {
 		for(Stock st : list) {
+			/**
+			 * update Stock set price = (select ? from stock_price where stock_seq = ? ) where stock_seq = ?
+			 */
 			st.setPrice(20000);
 		}
 		
