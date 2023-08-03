@@ -17,10 +17,13 @@ import mvc.exception.SellingAmountException;
  */
 
 public class StockServiceImpl implements StockService {
+    private StockServiceImpl() {
+        
+    }
 
 	
 	private static StockService instance = new StockServiceImpl(); 
-	private StockDAO boardDao = StockDAOImpl.getInstance() ;
+	private StockDAO stockDao = StockDAOImpl.getInstance();
     List<Stock> list = new ArrayList<Stock>();
 //    List<Stock> list = stockDao.selectAll();
     List<UserStock> userlist = new ArrayList<UserStock>();
@@ -39,9 +42,6 @@ public class StockServiceImpl implements StockService {
 		return instance;
 	}
     
-    private StockServiceImpl() {
-      
-    }
 
 	/**
 	 * 1. 종목조회 클릭시
@@ -86,7 +86,7 @@ public class StockServiceImpl implements StockService {
 		for(UserStock us : userlist) {
 			if(us.getStockName().equals(us.getStockName())) {
 //				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*amountBuy) / (us.getAmountBuy()+amountBuy));
-
+				us.setAvgprice(stockDao.updateAvgPrice(us,buyStock));
 				us.setAmountBuy(us.getAmountBuy()+amountBuy);
 				balance = balance - buyStock.getPrice()*amountBuy;
 				return balance;

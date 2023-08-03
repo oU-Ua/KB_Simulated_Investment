@@ -1,19 +1,22 @@
 package mvc.dao;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import mvc.dto.Stock;
+import mvc.dto.UserStock;
 
 public class StockDAOImpl implements StockDAO{
+	
 	private static StockDAO instance = new StockDAOImpl();
-	private StockDAOImpl() {};
-
 	public static StockDAO getInstance() {
 		return instance;
 		
 	}
+	private StockDAOImpl() {}
+	@Override
+	public int updateAvgPrice(UserStock us, Stock buyStock) {
+		// TODO Auto-generated method stub
+		return 0;
+	};
+
+
 }
