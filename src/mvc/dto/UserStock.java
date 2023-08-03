@@ -2,10 +2,17 @@ package mvc.dto;
 
 public class UserStock {
 	private int stockSeq;
-	private int stockCode;
+	private String stockCode;
 	private String stockName;
 	private int amountBuy;
 	private int avgprice;
+	public UserStock(int stockSeq) {
+		this.stockSeq = stockSeq;
+	}
+	public UserStock() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public UserStock(int stockSeq, String stockName, int amountBuy) {
 		super();
 		this.stockSeq = stockSeq;
@@ -15,7 +22,7 @@ public class UserStock {
 	
 
 
-	public UserStock(int stockSeq, int stockCode, String stockName, int amountBuy, int avgprice) {
+	public UserStock(int stockSeq, String stockCode, String stockName, int amountBuy, int avgprice) {
 		super();
 		this.stockSeq = stockSeq;
 		this.stockCode = stockCode;
@@ -26,6 +33,20 @@ public class UserStock {
 
 
 
+
+
+	public UserStock(int stockSeq, int amountBuy, int avgprice) {
+		this.stockSeq = stockSeq;
+		this.amountBuy = amountBuy;
+		this.avgprice = avgprice;
+	}
+	public String getStockCode() {
+		return stockCode;
+	}
+
+	public void setStockCode(String stockCode) {
+		this.stockCode = stockCode;
+	}
 
 	public int getStockSeq() {
 		return stockSeq;

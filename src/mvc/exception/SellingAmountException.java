@@ -5,7 +5,6 @@ package mvc.exception;
  * */
 public class SellingAmountException extends Exception {
 	public SellingAmountException() {
-		super("매도를 할만큼 주식을 가지고 있지 않습니다.");
 	}
 	public SellingAmountException(String message) {
 		super(message);

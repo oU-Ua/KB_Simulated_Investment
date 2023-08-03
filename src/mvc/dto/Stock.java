@@ -14,12 +14,12 @@ public class Stock {
     public Stock() {};
 
     
-	public Stock(int stockSeq, String stockName, int price, int evaluation) {
+	public Stock(String stockCode, String stockName, int price) {
 		super();
-		this.stockSeq = stockSeq;
+		this.stockCode = stockCode;
 		this.stockName = stockName;
 		this.price = price;
-		this.evaluation = evaluation;
+
 	}
 	
 
@@ -32,6 +32,8 @@ public class Stock {
 		this.related = related;
 		this.evaluation = evaluation;
 	}
+
+
 
 
 	public int getStockSeq() {
@@ -101,7 +103,7 @@ public class Stock {
 			s +="★";
 		for(int i=0; i<10-evaluation ;i++)
 			s +="☆";
-		return " 종목코드 : " +stockCode + " | 종목명 : " + stockName + "| 현재가 : " + price + "| 테마 : "  + related+ "| 종목평가 : "+s;
+		return stockSeq+" 종목코드 : " +stockCode + " | 종목명 : " + stockName + "| 현재가 : " + price + "| 테마 : "  + related+ "| 종목평가 : "+s;
 		
 	}
 	public String toString(int i) {

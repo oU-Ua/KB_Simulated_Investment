@@ -14,14 +14,14 @@ public interface StockService {
      * 등록된 전체 주식 종목 조회 
      * @return
      */
-    public List<Stock> stockAll() ;
+    public List<Stock> stockAll() throws SearchNotFoundException;
     
     
     /**
-     * 등록된 이용자의 주식 종목 조회 
+     * 등록된 이용자의 주식 종목 조회
      * @return
      */
-    public List<UserStock> stockUserAll();
+    public List<UserStock> stockUserAll()throws SearchNotFoundException;
 
 
     /**
@@ -56,7 +56,12 @@ public interface StockService {
 	public UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException;
 
 
-	public void updatePrice() throws SearchNotFoundException;
+	public void updatePrice()throws SearchNotFoundException;
+
+
+	/**
+	 * 3. 입력한 종목을 매수
+	 */
 
 
 	

@@ -36,7 +36,7 @@ public class SuccessView {
     public static void printUser(List<UserStock> user,int balance){
 		System.out.println("****** 현재 보유하고 있는 주식은 ("+user.size()+")개입니다. *****************");
         for(UserStock st : user) {
-           System.out.println(st);
+           System.out.println(st.toString());
         }
         System.out.println("남아있는 잔고는 "+balance+"입니다.");
 
