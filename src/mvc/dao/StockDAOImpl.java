@@ -11,6 +11,7 @@ import java.util.List;
 import mvc.common.DBManager;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
+import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 import mvc.view.MenuView;
@@ -262,6 +263,24 @@ public class StockDAOImpl implements StockDAO{
 			DBManager.releaseConnection(con, ps);
 		}
 
+		return result;
+	}
+	@Override
+	public int deleteAll() throws DMLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = "DELETE USER_STOCK ";
+		int result = 0;
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			result = ps.executeUpdate();
+		}catch(SQLException e) {
+//			e.printStackTrace();
+			throw new DMLException("종목가 업데이트에 실패했습니다.");
+		}finally {
+			DBManager.releaseConnection(con, ps);
+		}
 		return result;
 	}
 	

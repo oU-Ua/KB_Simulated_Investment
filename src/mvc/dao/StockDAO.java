@@ -4,6 +4,7 @@ import java.util.List;
 
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
+import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 
@@ -28,4 +29,7 @@ public interface StockDAO {
 
 	int sellStockDeleteUser(String stockName) throws SellingAmountException;
 	int updatePrice() throws SearchNotFoundException;
+
+
+	int deleteAll() throws DMLException;
 }

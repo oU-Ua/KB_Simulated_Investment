@@ -71,6 +71,7 @@ public class MenuView{
 		 }//while문끝
 	     if(today == period+1) {
 	    	 SuccessView.printFin(balance, seedmoney);
+	    	 controller.fin();
 	    	 System.exit(0);
 	     }
 

@@ -59,6 +59,9 @@ public interface StockService {
 	public void updatePrice()throws SearchNotFoundException;
 
 
+	public void finish();
+
+
 	/**
 	 * 3. 입력한 종목을 매수
 	 */

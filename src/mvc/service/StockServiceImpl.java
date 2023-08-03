@@ -209,6 +209,14 @@ public class StockServiceImpl implements StockService {
 	}
 
 
+	@Override
+	public void finish() throws DMLException{
+		int result = stockDao.deleteAll();
+		if(result == 0) throw new DMLException("가격이 바뀐 종목이 없습니다.");
+		
+	}
+
+
 }
 
 //	@Override

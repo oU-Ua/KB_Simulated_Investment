@@ -4,6 +4,7 @@ import java.util.List;
 
 import mvc.dto.Stock;
 import mvc.exception.BuyingBalanceException;
+import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 import mvc.service.StockService;
@@ -119,6 +120,15 @@ public class StockController {
 		}catch(SearchNotFoundException e) {
 			FailView.errorMessage(e.getMessage());
 		}
+	}
+	public void fin() {
+		try {
+			service.finish();
+		} catch (DMLException e) {
+			FailView.errorMessage(e.getMessage());
+		}
+		
+		
 	}
     
 }
