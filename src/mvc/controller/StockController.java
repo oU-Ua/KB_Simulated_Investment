@@ -1,5 +1,7 @@
 package mvc.controller;
 
+import java.util.Scanner;
+
 import mvc.dto.Stock;
 import mvc.exception.BuyingBalanceException;
 import mvc.exception.SearchNotFoundException;
@@ -23,6 +25,7 @@ public class StockController {
     private StockService service = StockServiceImpl.getInstance();
 	public static int seedmoney;
 	public static int balance = seedmoney;
+	Scanner sc= new Scanner(System.in);
 
     /**
      * 종목 조회 - 전체 주식 목록 출력 
@@ -107,6 +110,19 @@ public class StockController {
 		}catch(SearchNotFoundException e) {
 			FailView.errorMessage(e.getMessage());
 		}
+	}
+	
+	public void inputDetail() {
+		System.out.println("거래하려는 종목의 이름을 입력하세요. ");
+		String stockName = sc.nextLine();
+		try {
+			Stock stock = service.searchBystockName(stockName);
+			SuccessView.printDetail(stock);
+			new BuySellView(stockName);
+		}catch(SearchNotFoundException e) {
+			FailView.errorMessage(e.getMessage());
+		}
+		
 	}
     
 }
