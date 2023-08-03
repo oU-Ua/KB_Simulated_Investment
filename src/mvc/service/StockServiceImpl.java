@@ -167,23 +167,29 @@ public class StockServiceImpl implements StockService {
 		//1.예외처리
 
 		if(amountSell > sellStock.getAmountBuy())
-			throw new SellingAmountException();
+			throw new SellingAmountException("매도를 할만큼 주식을 가지고 있지 않습니다.");
 
 
 		/**
 		 *update User_Stock set amount_buy =? where stock_seq = (select stock_seq from stock where stock_name = ?)
 		 */
 		//2.매도하려는 주식량 <갖고있는 주식량 : amount값만 감소.
-		if(amountSell< sellStock.getAmountBuy()) 
-				sellStock.setAmountBuy(sellStock.getAmountBuy()-amountSell);
+		if(amountSell< sellStock.getAmountBuy()){
+			int amount_sell = sellStock.getAmountBuy()-amountSell;
+			int res = stockDao.sellStockMinusAmount(amount_sell, stockName);
+			if(res==0) throw new SellingAmountException("매도에 실패했습니다.");
+		}
 
 		/**
 		 *delete from User_Stock where stock_seq = (select stock_seq from stock where stock_name = ?)
 		 */
 
 		//3. 매도하려는 주식량 = 갖고있는 주식량 : user에서 삭제
-		else if(amountSell == sellStock.getAmountBuy())
-			userlist.remove(userlist.indexOf(sellStock));
+		else if(amountSell == sellStock.getAmountBuy()){
+			int res = stockDao.sellStockDeleteUser(stockName);
+			if(res==0) throw new SellingAmountException("매도에 실패했습니다.");
+		}
+
 		Stock select = searchBystockName(stockName);
 		balance = balance + select.getPrice()*amountSell;		
 		return balance;
