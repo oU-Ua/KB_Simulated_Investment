@@ -2,6 +2,7 @@ package mvc.dto;
 
 public class UserStock {
 	private int stockSeq;
+	private int stockCode;
 	private String stockName;
 	private int amountBuy;
 	private int avgprice;
@@ -12,13 +13,19 @@ public class UserStock {
 		this.amountBuy = amountBuy;
 	}
 	
-	public UserStock(int stockSeq, String stockName, int amountBuy, int avgprice) {
+
+
+	public UserStock(int stockSeq, int stockCode, String stockName, int amountBuy, int avgprice) {
 		super();
 		this.stockSeq = stockSeq;
+		this.stockCode = stockCode;
 		this.stockName = stockName;
 		this.amountBuy = amountBuy;
 		this.avgprice = avgprice;
 	}
+
+
+
 
 	public int getStockSeq() {
 		return stockSeq;
@@ -50,7 +57,7 @@ public class UserStock {
 
 	@Override
 	public String toString() {
-		return "UserStock [stockSeq=" + stockSeq + ", stockName=" + stockName + ", amountBuy=" + amountBuy + "]";
+		return " | 종목코드 : " + stockCode + " | 종목명 : " + stockName + "| 매수량 : " + amountBuy + "| 평균가 : " + avgprice ;
 	}
 	
 

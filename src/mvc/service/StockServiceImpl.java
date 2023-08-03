@@ -16,15 +16,7 @@ import mvc.exception.SellingAmountException;
  */
 
 public class StockServiceImpl implements StockService {
-	
-	String [][] data = new String [][]{
-		{"100","삼성","35000","5000000"},
-		{"200","lg","55000","5000"},
-		{"300","apple","5500000","4000"},
-		{"400","테슬라","800000","2000"},
-		{"500","주식","9000","400"}
-	}; // 최초의 초기치 데이터를 준비!! electronics에 저장 
-	
+
 	
 	private static StockService instance = new StockServiceImpl(); 
     private static final int MAX_SIZE=10; // 매수할 수 있는 주식의 한계를 정할까요 ?
@@ -32,6 +24,7 @@ public class StockServiceImpl implements StockService {
 //    List<Stock> list = stockDao.selectAll();
     List<UserStock> userlist = new ArrayList<UserStock>();
 //  List<UserStock> user = userStockDao.selectUserAll();    
+    
     
     /** 
      * 외부에서 객체 생성안됨. 
@@ -44,9 +37,6 @@ public class StockServiceImpl implements StockService {
 	}
     
     private StockServiceImpl() {
-        for(int i=0;i<data.length;i++) {
-        	list.add(new Stock(Integer.parseInt(data[i][0]),data[i][1],Integer.parseInt(data[i][2]),Integer.parseInt(data[i][3])));
-        }
       
     }
 	@Override
@@ -64,29 +54,27 @@ public class StockServiceImpl implements StockService {
 	 * 입력한 종목을 매수
 	 */
 	@Override
-	public int  stockBuy(Stock stock, int balance) throws BuyingBalanceException, SearchNotFoundException {
+	public int  stockBuy(String stockName, int amountBuy, int balance) throws BuyingBalanceException, SearchNotFoundException {
 		//1.예외처리 : 매수하려는 양이 현재 잔고보다 많을때 
-		Stock buyStock = searchBystockName(stock.getStockName()); // 구매하려는 주식의 가격을 알기 위해서 주식list에서 주식 찾기
+		Stock buyStock = searchBystockName(stockName); // 구매하려는 주식의 가격을 알기 위해서 주식list에서 주식 찾기
 		
-		if(buyStock.getPrice()*stock.getAmount() > balance) {
-			System.out.println(buyStock.getPrice()*stock.getAmount());
-			System.out.println(balance);
+		if(buyStock.getPrice()*amountBuy > balance) {
+
 			throw new BuyingBalanceException();}
 
 		//2.이미 userstock에 있는경우 : amount값만 증가.
 		for(UserStock us : userlist) {
-			if(us.getStockSeq()==stock.getStockSeq()) {
-				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*stock.getAmount()) / (us.getAmountBuy()+stock.getAmount()));
-				us.setAmountBuy(us.getAmountBuy()+stock.getAmount());
-				balance = balance - stock.getPrice()*stock.getAmount();
+			if(us.getStockName().equals(us.getStockName())) {
+				us.setAvgprice((us.getAvgprice()*us.getAmountBuy()+buyStock.getPrice()*amountBuy) / (us.getAmountBuy()+amountBuy));
+				us.setAmountBuy(us.getAmountBuy()+amountBuy);
+				balance = balance - buyStock.getPrice()*amountBuy;
 				return balance;
 			}
 
 		}
 		//3. userstock에 없는 경우 : userstock에 새로 추가 
-		userlist.add(new UserStock(buyStock.getStockSeq(), buyStock.getStockName(), stock.getAmount(),stock.getPrice()));
-		balance = balance -(buyStock.getPrice()*stock.getAmount());	
-		System.out.println(balance);
+		userlist.add(new UserStock(buyStock.getStockSeq(), buyStock.getStockSeq() ,buyStock.getStockName(), amountBuy , buyStock.getPrice()));
+		balance = balance -(buyStock.getPrice()*amountBuy);	
 		return balance;
 	}
 	
@@ -123,22 +111,30 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
-	public int stockSell(Stock stock, int balance) throws SellingAmountException, SearchNotFoundException {
-			UserStock sellStock = searchByUserstockName(stock.getStockName());
+	public int stockSell(String stockName, int amountSell, int balance) throws SellingAmountException, SearchNotFoundException {
+			UserStock sellStock = searchByUserstockName(stockName);
 		//1.예외처리 
-		if(stock.getAmount() > sellStock.getAmountBuy())
+		if(amountSell > sellStock.getAmountBuy())
 			throw new SellingAmountException();
 		
 		//2.매도하려는 주식량 <갖고있는 주식량 : amount값만 감소.
-		if(stock.getAmount()< sellStock.getAmountBuy()) 
-				sellStock.setAmountBuy(sellStock.getAmountBuy()-stock.getAmount());
+		if(amountSell< sellStock.getAmountBuy()) 
+				sellStock.setAmountBuy(sellStock.getAmountBuy()-amountSell);
 		
 		//3. 매도하려는 주식량 = 갖고있는 주식량 : user에서 삭제
-		else if(stock.getAmount() == sellStock.getAmountBuy())
+		else if(amountSell == sellStock.getAmountBuy())
 			userlist.remove(userlist.indexOf(sellStock));
-		Stock select = searchBystockName(stock.getStockName());
-		balance = balance + select.getPrice()*stock.getAmount();		
+		Stock select = searchBystockName(stockName);
+		balance = balance + select.getPrice()*amountSell;		
 		return balance;
+		
+	}
+
+	@Override
+	public void updatePrice() {
+		for(Stock st : list) {
+			st.setPrice(20000);
+		}
 		
 	}
 

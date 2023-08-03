@@ -46,20 +46,19 @@ public class StockController {
      * @param stock
      * @throws SellingAmountException 
      */
-    public void buy(Stock stock,int balance) {
+    public void buy(String stockName, int amountBuy, int balance) {
     	try {
-    		System.out.println(balance);
-    		balance = service.stockBuy(stock, balance);
+    		balance = service.stockBuy(stockName,amountBuy, balance);
     		SuccessView.printMessage("매수하였습니다.");
     		MenuView mv = new MenuView(balance);
     		mv.printMenu();
     	}catch( BuyingBalanceException e) {
         	FailView.errorMessage(e.getMessage());
-        	new BuySellView(stock.getStockName(), balance);
+        	new BuySellView(stockName, balance);
         } catch (SearchNotFoundException e) {
 			// TODO Auto-generated catch block
         	FailView.errorMessage(e.getMessage());
-        	detail(stock.getStockName(),balance);
+        	detail(stockName,balance);
 		}
     	
     }
@@ -70,19 +69,18 @@ public class StockController {
      * @throws SearchNotFoundException 
      * @throws SellingAmountException 
      */
-    public void sell(Stock stock, int balance)  {
+    public void sell(String stockName, int amountSell, int balance)  {
     	try {
-    		System.out.println(balance);
-    		balance = service.stockSell(stock, balance);
+    		balance = service.stockSell(stockName, amountSell, balance);
     		SuccessView.printMessage("매도하였습니다.");
     		MenuView mv = new MenuView(balance);
     		mv.printMenu();
     	}catch(SearchNotFoundException e) {
     		FailView.errorMessage(e.getMessage());
-    		new BuySellView(stock.getStockName(),balance);
+    		new BuySellView(stockName,balance);
     	}catch(SellingAmountException e) {
         	FailView.errorMessage(e.getMessage());
-        	new BuySellView(stock.getStockName(),balance);
+        	new BuySellView(stockName,balance);
         }
     	
     }
@@ -94,6 +92,7 @@ public class StockController {
 		SuccessView.printMessage("오늘의 장이 종료되었습니다.");
 		//장이 종료되었을 때 그냥 종료만 띄울것인지 오늘 하루 log도 띄울지
 		MenuView.today++;
+		service.updatePrice();
 	}
 
 

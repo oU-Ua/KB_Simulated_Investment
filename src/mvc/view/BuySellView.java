@@ -8,7 +8,7 @@ public class BuySellView {
 	Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController();
 	public BuySellView(String stockName, int balance) {
-		System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로  4. 장종료 ");
+		System.out.println("매수/매도를 하시겠습니까? 1. 매수   2. 매도  3. 뒤로 ");
 		int menu = sc.nextInt();
 		if(menu ==1)
 			this.inputBuy(stockName, balance);
@@ -16,8 +16,11 @@ public class BuySellView {
 			this.inputSell(stockName, balance);
 		else if(menu==3) 
 			this.back(balance);
-		else if(menu ==4) 
-			controller.finMarket();
+		else {
+			System.out.println("잘못된 입력입니다. 다시 입력하세요.\n");
+			new BuySellView(stockName, balance);
+		}
+			
 	}
 	public void back(int balance) {
 		System.out.println("메뉴로 돌아갑니다.");
@@ -31,7 +34,7 @@ public class BuySellView {
 	public void inputBuy(String stockName, int balance){
 		System.out.println("얼마나 매수하시겠습니까?");
 		int amountBuy = sc.nextInt();
-		controller.buy( new Stock(stockName , amountBuy), balance);
+		controller.buy(stockName,amountBuy, balance);
 
 
 
@@ -46,7 +49,7 @@ public class BuySellView {
 
 		System.out.print("얼마나 매도하시겠습니까?");
 		int amountSell = sc.nextInt();
-		controller.sell( new Stock(stockName , amountSell),balance );
+		controller.sell( stockName , amountSell,balance );
 	}
 
 }

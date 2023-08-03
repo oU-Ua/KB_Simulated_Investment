@@ -50,7 +50,7 @@ public class SuccessView {
         System.out.println(seedmoney);
 
        double userRatio = ((double)(balance - seedmoney) / (double)seedmoney)*100;
-        System.out.println("사용자의 수익률은 "+userRatio+"% 입니다.");
+        System.out.printf("사용자의 수익률은 %.2f"+"%% 입니다.",userRatio);
         if(userRatio > AVG_RATIO) 
         	System.out.println("투자왕");
         if(userRatio < AVG_RATIO) 
