@@ -92,7 +92,11 @@ public class StockController {
 		SuccessView.printMessage("오늘의 장이 종료되었습니다.");
 		//장이 종료되었을 때 그냥 종료만 띄울것인지 오늘 하루 log도 띄울지
 		MenuView.today++;
-		service.updatePrice();
+		try {
+			service.updatePrice();
+		} catch (SearchNotFoundException e) {
+			FailView.errorMessage(e.getMessage());
+		}
 	}
 
 
