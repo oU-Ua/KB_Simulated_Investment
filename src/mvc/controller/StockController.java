@@ -58,7 +58,7 @@ public class StockController {
         } catch (SearchNotFoundException e) {
 			// TODO Auto-generated catch block
         	FailView.errorMessage(e.getMessage());
-        	new BuySellView(stock.getStockName());
+        	detail(stock.getStockName());
 		}
     	
     }
@@ -103,8 +103,9 @@ public class StockController {
 		try {
 			Stock stock = service.searchBystockName(stockName);
 			SuccessView.printDetail(stock);
+			new BuySellView(stockName);
 		}catch(SearchNotFoundException e) {
-			
+			FailView.errorMessage(e.getMessage());
 		}
 	}
     
