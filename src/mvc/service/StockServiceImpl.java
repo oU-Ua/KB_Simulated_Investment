@@ -5,9 +5,11 @@ import java.util.List;
 
 import mvc.dao.StockDAO;
 import mvc.dao.StockDAOImpl;
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
+import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 
@@ -202,10 +204,28 @@ public class StockServiceImpl implements StockService {
 	 * @throws SearchNotFoundException 
 	 */
 	@Override
-	public void updatePrice() throws SearchNotFoundException {
-		
-		int result = stockDao.updatePrice();
+	public void updatePrice(int today) throws SearchNotFoundException {
+
+		int result = stockDao.updatePrice(today);
 		if(result == 0) throw new SearchNotFoundException("가격이 바뀐 종목이 없습니다.");
+	}
+
+
+	@Override
+	public void finish() throws DMLException{
+		int result = stockDao.deleteAll();
+		if(result == 0) throw new DMLException("가격이 바뀐 종목이 없습니다.");
+		
+	}
+
+	/**
+	 * 요일이 바뀔 때마다 헤드라인 노출
+	 * select * from headline where day = ?
+	 */
+	@Override
+	public List<Headline> headLine(int day) throws SearchNotFoundException {
+		List<Headline> list = stockDao.getHeadline(day);
+		return list;
 	}
 
 

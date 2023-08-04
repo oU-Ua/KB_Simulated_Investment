@@ -2,8 +2,10 @@ package mvc.dao;
 
 import java.util.List;
 
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
+import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 
@@ -27,6 +29,11 @@ public interface StockDAO {
 	int sellStockMinusAmount(int amountSell, String stockName) throws SellingAmountException;
 
 	int sellStockDeleteUser(String stockName) throws SellingAmountException;
-	int updatePrice() throws SearchNotFoundException;
+	int updatePrice(int today) throws SearchNotFoundException;
+
+
+	int deleteAll() throws DMLException;
+	List<Headline> getHeadline(int day) throws SearchNotFoundException;
+	
 }
 

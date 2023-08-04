@@ -2,6 +2,7 @@ package mvc.service;
 
 import java.util.List;
 
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
@@ -56,7 +57,11 @@ public interface StockService {
 	public UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException;
 
 
-	public void updatePrice()throws SearchNotFoundException;
+	public void updatePrice(int today)throws SearchNotFoundException;
+
+
+	public void finish();
+	public List<Headline> headLine(int day) throws SearchNotFoundException;
 
 
 	/**

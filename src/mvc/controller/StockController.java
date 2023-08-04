@@ -2,8 +2,10 @@ package mvc.controller;
 
 import java.util.List;
 
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.exception.BuyingBalanceException;
+import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 import mvc.service.StockService;
@@ -99,7 +101,7 @@ public class StockController {
 		//장이 종료되었을 때 그냥 종료만 띄울것인지 오늘 하루 log도 띄울지
 		MenuView.today++;
 		try {
-			service.updatePrice();
+			service.updatePrice(MenuView.today);
 		} catch (SearchNotFoundException e) {
 			FailView.errorMessage(e.getMessage());
 		}
@@ -108,8 +110,12 @@ public class StockController {
 
 
 	public void headline(int day) {
-		// TODO Auto-generated method stub
-		
+		try{
+			List<Headline> list = service.headLine(MenuView.today);
+			SuccessView.printHeadline(list);
+		}catch (SearchNotFoundException e){
+			FailView.errorMessage(e.getMessage());
+		}
 	}
 	public void detail(String stockName, int balance) {
 		try {
@@ -119,6 +125,17 @@ public class StockController {
 		}catch(SearchNotFoundException e) {
 			FailView.errorMessage(e.getMessage());
 		}
+	}
+	public void fin(int balance, int seedmoney) {
+		SuccessView.printFin(balance, seedmoney);
+		MenuView.today=1;
+		try {
+			service.updatePrice(MenuView.today);
+			service.finish();
+		} catch (DMLException | SearchNotFoundException e ) {
+		}
+		
+		
 	}
     
 }

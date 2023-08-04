@@ -78,7 +78,7 @@ public class UserStock {
 
 	@Override
 	public String toString() {
-		return " | 종목코드 : " + stockCode + " | 종목명 : " + stockName + "| 매수량 : " + amountBuy + "| 평균가 : " + avgprice ;
+		return " 종목코드 : " + stockCode + " | 종목명 : " + stockName + "| 매수량 : " + amountBuy + "| 평균가 : " + avgprice ;
 	}
 	
 
