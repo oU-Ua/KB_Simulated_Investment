@@ -2,9 +2,7 @@ package mvc.view;
 
 import java.util.Scanner;
 
-
 import mvc.controller.StockController;
-import mvc.dto.Stock;
 
 /**
    사용자의 요청을 키보드로 입력받는 클래스 

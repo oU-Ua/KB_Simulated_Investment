@@ -1,7 +1,7 @@
 package mvc.view;
 
 import java.util.Scanner;
-import mvc.dto.Stock;
+
 import mvc.controller.StockController;
 
 public class BuySellView {

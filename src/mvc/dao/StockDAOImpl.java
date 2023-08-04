@@ -3,23 +3,16 @@ package mvc.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-<<<<<<< HEAD
-import java.sql.SQLException;
-=======
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> 9295a714bc0dbde8addac09c44c0c804d6c366ae
 
 import mvc.common.DBManager;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.SearchNotFoundException;
-<<<<<<< HEAD
-=======
 import mvc.exception.SellingAmountException;
->>>>>>> 9295a714bc0dbde8addac09c44c0c804d6c366ae
 import mvc.view.MenuView;
 
 public class StockDAOImpl implements StockDAO{
@@ -31,34 +24,6 @@ public class StockDAOImpl implements StockDAO{
 	}
 	private StockDAOImpl() {}
 	@Override
-<<<<<<< HEAD
-	public int updateAvgPrice(UserStock us, Stock buyStock) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public int updatePrice() throws SearchNotFoundException{
-		Connection con = null;
-		PreparedStatement ps = null;
-		String sql = "update (select a.price, b.D" + MenuView.today + " from stock a, stock_price b "
-				+ "where a.stock_seq = b.stock_seq) set price = D" + MenuView.today;
-		int result = 0;
-		
-		try {
-			con = DBManager.getConnection();
-			ps = con.prepareStatement(sql);
-			
-			result = ps.executeUpdate();
-		}catch(SQLException e) {
-//			e.printStackTrace();
-			throw new SearchNotFoundException("종목가 업데이트에 실패했습니다.");
-		}finally {
-			DBManager.releaseConnection(con, ps);
-		}
-		
-		return result;
-	};
-=======
 	public List<Stock> stockAll() throws SearchNotFoundException {
 		Connection con =null;
 		PreparedStatement ps =null;
@@ -99,7 +64,6 @@ public class StockDAOImpl implements StockDAO{
 				userStockList.add(dto);
 			}
 	} catch (SQLException e) {
-		e.printStackTrace();
 			throw new SearchNotFoundException("보유주식 검색에 예외가 발생했습니다. 다시 조회해주세요.");
 			
 		}finally {
@@ -107,7 +71,6 @@ public class StockDAOImpl implements StockDAO{
 		}
 		return userStockList;
 		}
->>>>>>> 9295a714bc0dbde8addac09c44c0c804d6c366ae
 
 
 	@Override
@@ -127,7 +90,6 @@ public class StockDAOImpl implements StockDAO{
 			result = ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new SearchNotFoundException("");
 		}finally {
 			DBManager.releaseConnection(con, ps);
@@ -150,7 +112,6 @@ public class StockDAOImpl implements StockDAO{
 			result = ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new SearchNotFoundException("오류가 발생했습니다.");
 		}finally {
 			DBManager.releaseConnection(con, ps);
@@ -173,7 +134,6 @@ public class StockDAOImpl implements StockDAO{
 			result = ps.executeUpdate();
 			System.out.println(result);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new SearchNotFoundException("게시물 수정에 오류가 발생했습니다.");
 		}finally {
 			DBManager.releaseConnection(con, ps);
@@ -224,7 +184,6 @@ public class StockDAOImpl implements StockDAO{
 				
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new SearchNotFoundException("유저보유주식 검색에 예외가 발생했습니다. 다시 조회해주세요.");
 		}finally {
 			DBManager.releaseConnection(con,ps,rs);

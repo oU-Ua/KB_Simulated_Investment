@@ -5,13 +5,6 @@ import java.util.List;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.SearchNotFoundException;
-<<<<<<< HEAD
-
-public interface StockDAO {
-
-	int updateAvgPrice(UserStock us, Stock buyStock);
-	
-=======
 import mvc.exception.SellingAmountException;
 
 public interface StockDAO {
@@ -34,7 +27,6 @@ public interface StockDAO {
 	int sellStockMinusAmount(int amountSell, String stockName) throws SellingAmountException;
 
 	int sellStockDeleteUser(String stockName) throws SellingAmountException;
->>>>>>> 9295a714bc0dbde8addac09c44c0c804d6c366ae
 	int updatePrice() throws SearchNotFoundException;
 }
 

@@ -8,7 +8,6 @@ import mvc.dao.StockDAOImpl;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
-import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 
@@ -193,6 +192,7 @@ public class StockServiceImpl implements StockService {
 		Stock select = searchBystockName(stockName);
 		balance = balance + select.getPrice()*amountSell;		
 		return balance;
+		
 		
 	}
 

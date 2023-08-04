@@ -2,7 +2,6 @@ package mvc.view;
 
 import java.util.Scanner;
 
-import mvc.controller.StockController;
 import mvc.exception.PeriodInexOutException;
 
 class StartView {
@@ -72,9 +71,22 @@ class StartView {
 	}
 
 	public static int inputSeedMoney() {
+		String str;
+		while(true) {
 		System.out.println("시드머니를 입력하세요. (단위 : 원) ");
-        int  balance = Integer.parseInt(sc.nextLine());
+		str = (sc.nextLine());
+        if(Integer.MAX_VALUE<Long.parseLong(str)) {
+        	System.out.print("숫자를 너무 크게 입력했습니다. 줄여주세요\n 다시");
+        	continue;
+        }else if(1>Integer.parseInt(str)) {
+        	System.out.print("돈이 없이는 주식투자를 할 수가 없습니다.\n 다시 ");
+        	continue;
+        }
+        
+        int balance = Integer.parseInt(str);
+        
 		return balance;
+		}
 	}
     
     
