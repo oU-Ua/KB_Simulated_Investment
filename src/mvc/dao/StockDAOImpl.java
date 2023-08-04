@@ -12,16 +12,17 @@ import mvc.common.DBManager;
 import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
+import mvc.exception.DMLException;
 import mvc.exception.SearchNotFoundException;
 import mvc.exception.SellingAmountException;
 import mvc.view.MenuView;
 
 public class StockDAOImpl implements StockDAO{
-	
+
 	private static StockDAO instance = new StockDAOImpl();
 	public static StockDAO getInstance() {
 		return instance;
-		
+
 	}
 	private StockDAOImpl() {}
 	@Override
@@ -40,7 +41,7 @@ public class StockDAOImpl implements StockDAO{
 				stockList.add(dto);
 			}
 		} catch (SQLException e) {
-			
+
 			throw new SearchNotFoundException("전체주식 검색에 예외가 발생했습니다. 다시 조회해주세요.");
 		}finally {
 			DBManager.releaseConnection(con,ps,rs);
@@ -64,15 +65,15 @@ public class StockDAOImpl implements StockDAO{
 
 				userStockList.add(dto);
 			}
-	} catch (SQLException e) {
-		e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new SearchNotFoundException("보유주식 검색에 예외가 발생했습니다. 다시 조회해주세요.");
-			
+
 		}finally {
 			DBManager.releaseConnection(con,ps,rs);
 		}
 		return userStockList;
-		}
+	}
 
 
 	@Override
@@ -86,11 +87,11 @@ public class StockDAOImpl implements StockDAO{
 			ps = con.prepareStatement(sql);
 			System.out.println(updatePrice);
 			System.out.println(stockname);
-			//?가 있다면 set 설정 필요 
+			//?가 있다면 set 설정 필요
 			ps.setInt(1, updatePrice);
 			ps.setString(2, stockname);
 			result = ps.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SearchNotFoundException("");
@@ -99,7 +100,7 @@ public class StockDAOImpl implements StockDAO{
 		}
 		return result;
 	}
-	
+
 	@Override
 	public int updateAmountBuy(int updateAmount, UserStock us) throws SearchNotFoundException {
 		Connection con = null;
@@ -109,11 +110,11 @@ public class StockDAOImpl implements StockDAO{
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
-			//?가 있다면 set 설정 필요 
+			//?가 있다면 set 설정 필요
 			ps.setInt(1, updateAmount);
 			ps.setInt(2, us.getStockSeq());
 			result = ps.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SearchNotFoundException("오류가 발생했습니다.");
@@ -131,7 +132,7 @@ public class StockDAOImpl implements StockDAO{
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
-			//?가 있다면 set 설정 필요 
+			//?가 있다면 set 설정 필요
 			ps.setInt(1, buyStock.getStockSeq());
 			ps.setInt(2, amountBuy);
 			ps.setInt(3, buyStock.getPrice());
@@ -157,19 +158,19 @@ public class StockDAOImpl implements StockDAO{
 			ps = con.prepareStatement(sql);
 			ps.setString(1, stock_name);
 			rs = ps.executeQuery();
-			
+
 			if(rs.next()){
 				stock = new Stock(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getInt(4),rs.getString(5),rs.getInt(6));
-				
+
 			}
 		} catch (SQLException e) {
-			
+
 			throw new SearchNotFoundException("전체주식 검색에 예외가 발생했습니다. 다시 조회해주세요.");
 		}finally {
 			DBManager.releaseConnection(con,ps,rs);
 		}
 		return stock;
-		
+
 	}
 	@Override
 	public UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException {
@@ -183,10 +184,10 @@ public class StockDAOImpl implements StockDAO{
 			ps = con.prepareStatement(sql);
 			ps.setString(1, stock_name);
 			rs = ps.executeQuery();
-			
+
 			if(rs.next()){
 				userstock = new UserStock(rs.getInt(1),rs.getInt(2),rs.getInt(3));
-				
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -263,6 +264,24 @@ public class StockDAOImpl implements StockDAO{
 			DBManager.releaseConnection(con, ps);
 		}
 
+		return result;
+	}
+	@Override
+	public int deleteAll() throws DMLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = "DELETE USER_STOCK ";
+		int result = 0;
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			result = ps.executeUpdate();
+		}catch(SQLException e) {
+//			e.printStackTrace();
+			throw new DMLException("종목가 업데이트에 실패했습니다.");
+		}finally {
+			DBManager.releaseConnection(con, ps);
+		}
 		return result;
 	}
 
