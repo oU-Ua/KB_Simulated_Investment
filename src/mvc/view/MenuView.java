@@ -1,5 +1,6 @@
 package mvc.view;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -28,20 +29,22 @@ public class MenuView{
 
 	/**
 	  전체 메뉴를 출력하는 메소드
+	 * @throws 
 	*/
-	public void printMenu(){
+	public void printMenu() throws IOException{
 		
         
 	     while(today < period+1){
-	    	 System.out.println("\n\n");
+	    	 System.out.println("\n");
 	    	 System.out.println(today+"일차 장 \n");
 	    	 System.out.println("사용자 잔고 : "+ balance);
 	    	 if(statement) controller.headline(today);
+	    	 statement=false;
 //	    	 System.out.pirntln(controller.headline(today)); headline을 어떻게 보여줄 지 모르겠어서 일단 함수형태로 생각해봤어요 
-           System.out.println("----------------------------------- Menu -----------------------------------------");
-           System.out.println("1. 종목 조회    2. 보유주식 조회   3.매수/매도    4. 장 종료      9. 프로그램 종료");
-		   System.out.println("----------------------------------------------------------------------------------");
-		   System.out.print("메뉴선택 > ");
+           System.out.println("------------------------------------- Menu -----------------------------------------");
+           System.out.println("      1. 종목 조회    2. 보유주식 조회    3.매수/매도     4. 장 종료     9. 프로그램 종료");
+		   System.out.println("------------------------------------------------------------------------------------");
+		   System.out.print("\n메뉴선택 > ");
 
 		   String  menu = sc.nextLine();
 		   switch(menu){
@@ -81,7 +84,7 @@ public class MenuView{
 	     }
 
 	}//메소드끝
-	public void inputDetail(int balance) {
+	public void inputDetail(int balance) throws IOException {
 		System.out.println("선택하려는 종목의 이름을 입력하세요. ");
 		String stockName = sc.nextLine();
 		controller.detail(stockName, balance);

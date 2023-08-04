@@ -66,7 +66,7 @@ public class StockServiceImpl implements StockService {
 		userlist =this.stockDao.stockUserAll();
 
 		if(userlist.isEmpty())
-			throw new SearchNotFoundException("매수한 주식이 없습니다.");
+			throw new SearchNotFoundException("\n매수한 주식이 없습니다.");
 		else return userlist;
 	}
 	
@@ -139,7 +139,8 @@ public class StockServiceImpl implements StockService {
 	public Stock searchBystockName(String stock_name) throws SearchNotFoundException {
 		
 		Stock stock = stockDao.searchBystockName(stock_name);
-		
+		if(stock == null)
+			throw new SearchNotFoundException(stock_name+"은(는) 없는 종목입니다.");
 		return stock;
 
 	}
@@ -157,7 +158,7 @@ public class StockServiceImpl implements StockService {
 				return us;
 		}
 		
-		throw new SearchNotFoundException(stock_name+"는 매수하지 않은 종목입니다.");
+		throw new SearchNotFoundException(stock_name+"은(는) 매수하지 않은 종목입니다.");
 
 	}
 

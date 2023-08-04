@@ -103,11 +103,11 @@ public class Stock {
 			s +="★";
 		for(int i=0; i<10-evaluation ;i++)
 			s +="☆";
-		return " 종목코드 : " +stockCode + " | 종목명 : " + stockName + "| 현재가 : " + price + "| 테마 : "  + related+ "| 종목평가 : "+s;
+		return "종목코드 : " +stockCode + " | 종목명 : " + stockName + " | 현재가 : ₩" + price + " | 테마 : "  + related+ " | 종목평가 : "+s;
 		
 	}
 	public String toString(int i) {
-		return stockCode + " | " + stockName + "|" + price ;
+		return " 종목코드 : " + stockCode + " | 종목명 : " + stockName + " | 현재가 : ₩"+ price ;
 	}
 
 

@@ -1,5 +1,6 @@
 package mvc.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import mvc.dto.Headline;
@@ -52,9 +53,10 @@ public class StockController {
     /**
      * 주식 매수하기 
      * @param stock
+     * @throws IOException 
      * @throws SellingAmountException 
      */
-    public void buy(String stockName, int amountBuy, int balance) {
+    public void buy(String stockName, int amountBuy, int balance) throws IOException {
     	try {
     		balance = service.stockBuy(stockName,amountBuy, balance);
     		SuccessView.printMessage("매수하였습니다.");
@@ -74,10 +76,11 @@ public class StockController {
     /**
      * 주식 매도하기 
      * @param stock
+     * @throws IOException 
      * @throws SearchNotFoundException 
      * @throws SellingAmountException 
      */
-    public void sell(String stockName, int amountSell, int balance)  {
+    public void sell(String stockName, int amountSell, int balance) throws IOException  {
     	try {
     		balance = service.stockSell(stockName, amountSell, balance);
     		SuccessView.printMessage("매도하였습니다.");
@@ -100,6 +103,7 @@ public class StockController {
 		SuccessView.printMessage("오늘의 장이 종료되었습니다.");
 		//장이 종료되었을 때 그냥 종료만 띄울것인지 오늘 하루 log도 띄울지
 		MenuView.today++;
+		MenuView.statement = true;
 		try {
 			service.updatePrice(MenuView.today);
 		} catch (SearchNotFoundException e) {
@@ -117,7 +121,7 @@ public class StockController {
 			FailView.errorMessage(e.getMessage());
 		}
 	}
-	public void detail(String stockName, int balance) {
+	public void detail(String stockName, int balance) throws IOException {
 		try {
 			Stock stock = service.searchBystockName(stockName);
 			SuccessView.printDetail(stock);
@@ -126,7 +130,7 @@ public class StockController {
 			FailView.errorMessage(e.getMessage());
 		}
 	}
-	public void fin(int balance, int seedmoney) {
+	public void fin(int balance, int seedmoney) throws IOException {
 		SuccessView.printFin(balance, seedmoney);
 		MenuView.today=1;
 		try {

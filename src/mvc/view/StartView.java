@@ -1,5 +1,6 @@
 package mvc.view;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import mvc.controller.StockController;
@@ -8,11 +9,13 @@ import mvc.exception.PeriodInexOutException;
 class StartView {
 	static Scanner sc= new Scanner(System.in);
 	
-    public static void main(String []args) {
-    	System.out.println("===== KB 모의 투자 프로그램을 시작합니다. =====");
+    public static void main(String []args) throws IOException {
+    	System.out.println("===================================================");
+    	System.out.println("======       KB 모의 투자 프로그램을 시작합니다.       =====");
+    	System.out.println("===================================================");
     	while(true) {
            
-            System.out.println("시작하시겠습니까? (Y/N) ");
+            System.out.println("\n시작하시겠습니까? (Y/N) ");
             String  start = sc.nextLine();
             if(start.equals("N")||start.equals("n")) {
             	System.out.println("프로그램을 종료합니다.");
@@ -46,15 +49,14 @@ class StartView {
             	System.out.println();
                 MenuView.period = period;
                 MenuView.seedmoney = balance;
-                
-                System.out.println();
+
             	 MenuView mv = new MenuView(balance); // 전역변수 초기화, 생성자 호출 
                  mv.printMenu();
                  break;
             }
             else {
-            	System.out.println("잘못된 입력입니다. Y 혹은 N으로 입력해주세요.");
-            	System.out.println("**************다시 시작합니다 **************\n\n");
+            	System.out.println("잘못된 입력입니다. Y 혹은 N으로 입력해주세요.\n");
+            	System.out.println("------------ 다시 시작합니다 ------------\n");
             }
     	}
 
@@ -74,7 +76,7 @@ class StartView {
     public static int inputSeedMoney() {
     	String str;
     	while(true) {
-    		System.out.println("시드머니를 입력하세요. (단위 : 원) ");
+    		System.out.println("\n시드머니를 입력하세요. (단위 : 원) ");
     		str = (sc.nextLine());
     		if(Integer.MAX_VALUE<Long.parseLong(str)) {
     			System.out.print("숫자를 너무 크게 입력했습니다. 줄여주세요\n다시");

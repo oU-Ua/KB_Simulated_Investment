@@ -85,8 +85,7 @@ public class StockDAOImpl implements StockDAO{
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
-			System.out.println(updatePrice);
-			System.out.println(stockname);
+		
 			//?가 있다면 set 설정 필요 
 			ps.setInt(1, updatePrice);
 			ps.setString(2, stockname);
@@ -137,7 +136,7 @@ public class StockDAOImpl implements StockDAO{
 			ps.setInt(2, amountBuy);
 			ps.setInt(3, buyStock.getPrice());
 			result = ps.executeUpdate();
-			System.out.println(result);
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SearchNotFoundException("게시물 수정에 오류가 발생했습니다.");
@@ -153,6 +152,7 @@ public class StockDAOImpl implements StockDAO{
 		ResultSet rs = null;
 		Stock stock = new Stock();
 		String sql ="select * from Stock where stock_name =?";
+		
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
@@ -161,7 +161,9 @@ public class StockDAOImpl implements StockDAO{
 			
 			if(rs.next()){
 				stock = new Stock(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getInt(4),rs.getString(5),rs.getInt(6));
-				
+			}
+			else {
+				return null;
 			}
 		} catch (SQLException e) {
 			
