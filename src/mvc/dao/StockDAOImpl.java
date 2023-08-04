@@ -92,7 +92,7 @@ public class StockDAOImpl implements StockDAO{
 			result = ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new SearchNotFoundException("");
+			throw new SearchNotFoundException("평균 가격 수정에 오류가 생겼습니다.");
 		}finally {
 			DBManager.releaseConnection(con, ps);
 		}
@@ -136,7 +136,7 @@ public class StockDAOImpl implements StockDAO{
 			result = ps.executeUpdate();
 			System.out.println(result);
 		} catch (SQLException e) {
-			throw new SearchNotFoundException("게시물 수정에 오류가 발생했습니다.");
+			throw new SearchNotFoundException("매수 단계에서 오류가 발생했습니다.");
 		}finally {
 			DBManager.releaseConnection(con, ps);
 		}
@@ -161,7 +161,7 @@ public class StockDAOImpl implements StockDAO{
 			}
 		} catch (SQLException e) {
 			
-			throw new SearchNotFoundException("전체주식 검색에 예외가 발생했습니다. 다시 조회해주세요.");
+			throw new SearchNotFoundException("찾으려는 주식 검색에 예외가 발생했습니다. 다시 조회해주세요.");
 		}finally {
 			DBManager.releaseConnection(con,ps,rs);
 		}
