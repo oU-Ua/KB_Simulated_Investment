@@ -61,21 +61,34 @@ class StartView {
         
     }
 
-	public static int inputPeriod() throws PeriodInexOutException{
-		 System.out.println("\n투자기간을 입력하세요. (단위 : 일)");
-         int  period = Integer.parseInt(sc.nextLine());
-		if(period > 30 || period <1) {
-			throw new PeriodInexOutException();
-		}
-		return period;
-		
-	}
+    public static int inputPeriod() throws PeriodInexOutException{
+    	System.out.println("\n투자기간을 입력하세요. (단위 : 일)");
+    	int  period = Integer.parseInt(sc.nextLine());
+    	if(period > 30 || period <1) {
+    		throw new PeriodInexOutException();
+    	}
+    	return period;
 
-	public static int inputSeedMoney() {
-		System.out.println("시드머니를 입력하세요. (단위 : 원) ");
-        int  balance = Integer.parseInt(sc.nextLine());
-		return balance;
-	}
-    
+    }
+
+    public static int inputSeedMoney() {
+    	String str;
+    	while(true) {
+    		System.out.println("시드머니를 입력하세요. (단위 : 원) ");
+    		str = (sc.nextLine());
+    		if(Integer.MAX_VALUE<Long.parseLong(str)) {
+    			System.out.print("숫자를 너무 크게 입력했습니다. 줄여주세요\n다시");
+    			continue;
+    		}else if(1>Integer.parseInt(str)) {
+    			System.out.print("0 이하는 입력할 수 없습니다. \n다시 ");
+    			continue;
+    		}
+
+    		int balance = Integer.parseInt(str);
+
+    		return balance;
+    	}
+    }
+
     
 }

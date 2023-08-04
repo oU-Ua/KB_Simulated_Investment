@@ -2,6 +2,7 @@ package mvc.view;
 
 import java.util.List;
 
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 
@@ -46,16 +47,21 @@ public class SuccessView {
     
     public static void printFin(int balance, int seedmoney) {
         System.out.println("모의투자가 종료되었습니다.");
-        System.out.println(balance);
-        System.out.println(seedmoney);
 
        double userRatio = ((double)(balance - seedmoney) / (double)seedmoney)*100;
-        System.out.printf("사용자의 수익률은 %.2f"+"%% 입니다.",userRatio);
+        System.out.printf("사용자의 수익률은 %.2f"+"%% 입니다.\n",userRatio);
         if(userRatio > AVG_RATIO) 
         	System.out.println("투자왕");
         if(userRatio < AVG_RATIO) 
         	System.out.println("분발 ~");
     }
+    public static void printHeadline(List<Headline> list){
+        System.out.println("*******" + MenuView.today +"일자 주요 뉴스 *******");
+        for(Headline h : list) System.out.println(h);
+        System.out.println();
+        System.out.println();
+    }
+
 
     /**
      * 성공에 관련된 메세지 출력 

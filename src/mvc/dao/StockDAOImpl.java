@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mvc.common.DBManager;
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.DMLException;
@@ -244,11 +245,11 @@ public class StockDAOImpl implements StockDAO{
 		return res;
 	}
 	@Override
-	public int updatePrice() throws SearchNotFoundException{
+	public int updatePrice(int today) throws SearchNotFoundException{
 		Connection con = null;
 		PreparedStatement ps = null;
-		String sql = "update (select a.price, b.D" + MenuView.today + " from stock a, stock_price b "
-				+ "where a.stock_seq = b.stock_seq) set price = D" + MenuView.today;
+		String sql = "update (select a.price, b.D" + today + " from stock a, stock_price b "
+				+ "where a.stock_seq = b.stock_seq) set price = D" + today;
 		int result = 0;
 
 		try {
@@ -284,4 +285,30 @@ public class StockDAOImpl implements StockDAO{
 		return result;
 	}
 	
+	@Override
+	public List<Headline> getHeadline(int day) throws SearchNotFoundException {
+
+		Connection con =null;
+		PreparedStatement ps =null;
+		ResultSet rs = null;
+		List<Headline> list = new ArrayList<>();
+		String sql ="select * from headline where day = ?";
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, day);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				list.add(new Headline(rs.getInt("day"), rs.getString("info")));
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new SearchNotFoundException("헤드라인 조회에 오류가 발생했습니다");
+
+		}finally {
+			DBManager.releaseConnection(con,ps,rs);
+		}
+
+		return list;
+	}
 }
