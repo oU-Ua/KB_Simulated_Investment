@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mvc.common.DBManager;
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.SearchNotFoundException;
@@ -264,5 +265,32 @@ public class StockDAOImpl implements StockDAO{
 
 		return result;
 	}
-	
+
+	@Override
+	public List<Headline> getHeadline(int day) throws SearchNotFoundException {
+
+		Connection con =null;
+		PreparedStatement ps =null;
+		ResultSet rs = null;
+		List<Headline> list = new ArrayList<>();
+		String sql ="select * from headline where day = ?";
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, day);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				list.add(new Headline(rs.getInt("day"), rs.getString("info")));
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new SearchNotFoundException("헤드라인 조회에 오류가 발생했습니다");
+
+		}finally {
+			DBManager.releaseConnection(con,ps,rs);
+		}
+
+		return list;
+	}
+
 }

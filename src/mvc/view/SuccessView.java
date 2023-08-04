@@ -2,6 +2,7 @@ package mvc.view;
 
 import java.util.List;
 
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 
@@ -55,6 +56,13 @@ public class SuccessView {
         	System.out.println("투자왕");
         if(userRatio < AVG_RATIO) 
         	System.out.println("분발 ~");
+    }
+
+    public static void printHeadline(List<Headline> list){
+        System.out.println("*******" + MenuView.today +"일자 주요 뉴스 *******");
+        for(Headline h : list) System.out.println(h);
+        System.out.println();
+        System.out.println();
     }
 
     /**

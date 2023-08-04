@@ -2,6 +2,7 @@ package mvc.service;
 
 import java.util.List;
 
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.dto.UserStock;
 import mvc.exception.BuyingBalanceException;
@@ -58,6 +59,7 @@ public interface StockService {
 
 	public void updatePrice()throws SearchNotFoundException;
 
+    public List<Headline> headLine(int day) throws SearchNotFoundException;
 
 	/**
 	 * 3. 입력한 종목을 매수

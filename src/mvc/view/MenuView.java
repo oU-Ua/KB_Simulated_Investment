@@ -24,6 +24,7 @@ public class MenuView{
 	Scanner sc= new Scanner(System.in);
 	StockController controller = new StockController(); // 전역변수 초기화, 생성자 호출 
 	public static int today =1;
+	public static boolean statement = true;
 
 	/**
 	  전체 메뉴를 출력하는 메소드
@@ -35,6 +36,7 @@ public class MenuView{
 	    	 System.out.println("\n\n");
 	    	 System.out.println(today+"일차 장 \n");
 	    	 System.out.println("balance : "+ balance);
+			 if(statement) controller.headline(today);
 //	    	 System.out.pirntln(controller.headline(today)); headline을 어떻게 보여줄 지 모르겠어서 일단 함수형태로 생각해봤어요 
            System.out.println("----------------------------------- Menu -----------------------------------------");
            System.out.println("1. 종목 조회    2. 보유주식 조회   3.매수/매도    4. 장 종료      9. 프로그램 종료");

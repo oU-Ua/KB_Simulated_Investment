@@ -32,11 +32,7 @@ public class Headline {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Headline [day=");
-		builder.append(day);
-		builder.append(", info=");
 		builder.append(info);
-		builder.append("]");
 		return builder.toString();
 	}
 	

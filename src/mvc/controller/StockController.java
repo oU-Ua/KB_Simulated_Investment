@@ -2,6 +2,7 @@ package mvc.controller;
 
 import java.util.List;
 
+import mvc.dto.Headline;
 import mvc.dto.Stock;
 import mvc.exception.BuyingBalanceException;
 import mvc.exception.SearchNotFoundException;
@@ -98,6 +99,7 @@ public class StockController {
 		SuccessView.printMessage("오늘의 장이 종료되었습니다.");
 		//장이 종료되었을 때 그냥 종료만 띄울것인지 오늘 하루 log도 띄울지
 		MenuView.today++;
+		MenuView.statement = true;
 		try {
 			service.updatePrice();
 		} catch (SearchNotFoundException e) {
@@ -105,12 +107,19 @@ public class StockController {
 		}
 	}
 
-
-
+	/**
+	 * 헤드라인
+	 * */
 	public void headline(int day) {
-		// TODO Auto-generated method stub
+		try{
+			List<Headline> list = service.headLine(MenuView.today);
+			SuccessView.printHeadline(list);
+		}catch (SearchNotFoundException e){
+			FailView.errorMessage(e.getMessage());
+		}
 		
 	}
+
 	public void detail(String stockName, int balance) {
 		try {
 			Stock stock = service.searchBystockName(stockName);

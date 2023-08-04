@@ -25,6 +25,7 @@ public class BuySellView {
 	public void back(int balance) {
 		System.out.println("메뉴로 돌아갑니다.");
 		MenuView mv = new MenuView(balance);
+		MenuView.statement = false;
 		mv.printMenu();
 
 	}
