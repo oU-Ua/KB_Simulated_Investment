@@ -62,7 +62,12 @@ class StartView {
 
         
     }
-
+    
+    /**
+     * 투자 기간 입력
+     * @return
+     * @throws PeriodInexOutException
+     */
     public static int inputPeriod() throws PeriodInexOutException{
     	System.out.println("\n투자기간을 입력하세요. (단위 : 일)");
     	int  period = Integer.parseInt(sc.nextLine());
@@ -72,7 +77,11 @@ class StartView {
     	return period;
 
     }
-
+    
+    /**
+     * 시드머니 입력
+     * @return
+     */
     public static int inputSeedMoney() {
     	String str;
     	while(true) {

@@ -37,6 +37,11 @@ public class StockController {
 		} catch (SearchNotFoundException e) {
 			FailView.errorMessage(e.getMessage());	}
 	}
+    
+    /**
+     * 보유 주식 조회
+     * @param balance
+     */
 	public void stockUser(int balance) {
 		try {
 			SuccessView.printUser(service.stockUserAll(),balance);
@@ -44,12 +49,8 @@ public class StockController {
 		}catch (SearchNotFoundException e){
 			FailView.errorMessage(e.getMessage());
 		}
-
-
 	}
  
-     
-
     /**
      * 주식 매수하기 
      * @param stock
@@ -111,8 +112,10 @@ public class StockController {
 		}
 	}
 
-
-
+	/**
+	 * 뉴스 헤드라인 노출
+	 * @param day
+	 */
 	public void headline(int day) {
 		try{
 			List<Headline> list = service.headLine(MenuView.today);
@@ -121,6 +124,13 @@ public class StockController {
 			FailView.errorMessage(e.getMessage());
 		}
 	}
+	
+	/**
+	 * 주식 상세정보 출력
+	 * @param stockName
+	 * @param balance
+	 * @throws IOException
+	 */
 	public void detail(String stockName, int balance) throws IOException {
 		try {
 			Stock stock = service.searchBystockName(stockName);
@@ -130,6 +140,13 @@ public class StockController {
 			FailView.errorMessage(e.getMessage());
 		}
 	}
+	
+	/**
+	 * 프로그램 종료
+	 * @param balance
+	 * @param seedmoney
+	 * @throws IOException
+	 */
 	public void fin(int balance, int seedmoney) throws IOException {
 		SuccessView.printFin(balance, seedmoney);
 		MenuView.today=1;

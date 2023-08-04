@@ -50,7 +50,12 @@ public class SuccessView {
 		System.out.println();
     }
 
-    
+    /**
+     * 전달된 인수 출력 (프로그램 종료 시 수익률 결과)
+     * @param balance
+     * @param seedmoney
+     * @throws IOException
+     */
     public static void printFin(int balance, int seedmoney) throws IOException {
         System.out.println("모의투자가 종료되었습니다.\n");
 
@@ -65,10 +70,13 @@ public class SuccessView {
     	String str;
     	while((str = buff.readLine()) != null) {
     		System.out.println(str);
-    	}
-        
-        
+    	}       
     }
+    
+    /**
+     * 전달된 배열을 출력 (헤드라인 결과)
+     * @param list
+     */
     public static void printHeadline(List<Headline> list){
         System.out.println("\n\n--------------------------------- " + MenuView.today +" 일자 주요 뉴스 --------------------------------------\n");
         for(Headline h : list) {
@@ -87,12 +95,5 @@ public class SuccessView {
      */
     public static void printMessage(String message) {
          System.out.println(message+"\n");
-    }
-    /**
-     * detail 출출력 
-     * @param stockDetail
-     */
-
-
-    
+    }   
 }

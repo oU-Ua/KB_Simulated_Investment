@@ -40,7 +40,6 @@ public class MenuView{
 	    	 System.out.println("사용자 잔고 : "+ balance);
 	    	 if(statement) controller.headline(today);
 	    	 statement=false;
-//	    	 System.out.pirntln(controller.headline(today)); headline을 어떻게 보여줄 지 모르겠어서 일단 함수형태로 생각해봤어요 
            System.out.println("------------------------------------- Menu -----------------------------------------");
            System.out.println("      1. 종목 조회    2. 보유주식 조회    3.매수/매도     4. 장 종료     9. 프로그램 종료");
 		   System.out.println("------------------------------------------------------------------------------------");
@@ -84,6 +83,12 @@ public class MenuView{
 	     }
 
 	}//메소드끝
+	
+	/**
+	 * 선택한 종목의 상세 정보 출력
+	 * @param balance
+	 * @throws IOException
+	 */
 	public void inputDetail(int balance) throws IOException {
 		System.out.println("선택하려는 종목의 이름을 입력하세요. ");
 		String stockName = sc.nextLine();

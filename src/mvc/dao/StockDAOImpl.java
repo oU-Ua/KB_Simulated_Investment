@@ -122,6 +122,7 @@ public class StockDAOImpl implements StockDAO{
 		}
 		return result;
 	}
+	
 	@Override
 	public int insertUserstock(Stock buyStock, int amountBuy) throws SearchNotFoundException {
 		Connection con = null;
@@ -145,6 +146,7 @@ public class StockDAOImpl implements StockDAO{
 		}
 		return result;
 	}
+	
 	@Override
 	public Stock searchBystockName(String stock_name) throws SearchNotFoundException {
 		Connection con =null;
@@ -174,6 +176,7 @@ public class StockDAOImpl implements StockDAO{
 		return stock;
 		
 	}
+	
 	@Override
 	public UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException {
 		Connection con =null;
@@ -200,6 +203,7 @@ public class StockDAOImpl implements StockDAO{
 		return userstock;
 
 	}
+	
 	@Override
 	public int sellStockMinusAmount(int amountSell, String stockName) throws SellingAmountException {
 
@@ -246,6 +250,7 @@ public class StockDAOImpl implements StockDAO{
 
 		return res;
 	}
+	
 	@Override
 	public int updatePrice(int today) throws SearchNotFoundException{
 		Connection con = null;
@@ -268,6 +273,7 @@ public class StockDAOImpl implements StockDAO{
 
 		return result;
 	}
+	
 	@Override
 	public int deleteAll() throws DMLException {
 		Connection con = null;

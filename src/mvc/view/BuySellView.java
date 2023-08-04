@@ -23,12 +23,19 @@ public class BuySellView {
 		}
 			
 	}
+	
+	/**
+	 * 실행하는 도중 메뉴로 돌아갈 수 있는 메소드
+	 * @param balance
+	 * @throws IOException
+	 */
 	public void back(int balance) throws IOException {
 		System.out.println("메뉴로 돌아갑니다.");
 		MenuView mv = new MenuView(balance);
 		mv.printMenu();
 
 	}
+	
 	/**
 	  매수하기 위해 매수하려는 종목을 키보드 입력처리하는 메소드
 	 * @throws IOException 
@@ -42,14 +49,11 @@ public class BuySellView {
 
 	}
 
-
 	/**
 	  모델번호에 해당하는 설명을 수정하기 위해 키보드 입력처리하는 메소드
 	 * @throws IOException 
 	 */
 	public void inputSell(String stockName, int balance) throws IOException{
-
-
 		System.out.print("얼마나 매도하시겠습니까?");
 		int amountSell = sc.nextInt();
 		controller.sell( stockName , amountSell,balance );

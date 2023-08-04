@@ -26,53 +26,56 @@ public interface StockService {
 
 
     /**
-     * 모델번호에 해당하는 전자제품 수정하기 
-     * (설명만 수정한다)
-     * @param electronics
-     *  : 수정전에 모델번호에 해당하는 정보가 있는지를 찾고 없으면
-     *     SearchNotFoundException 예외발생
-     *     있으면 전자제품 모델번호에 해당하는 설명을 수정한다.
+     *  종목이름에 해당하는 주식이 있는지를 찾고 없으면
+     *  SearchNotFoundException 예외발생
+     *  잔고 부족하면 BuyingBalanceException 예외발생
+     *  있으면 userstock에서 amount update 또는 insert
      */
     public int stockBuy(String stockName, int amountBuy, int balance) throws BuyingBalanceException,SearchNotFoundException;
     
     
     /**
-     * 모델번호에 해당하는 전자제품 삭제하기
-     * 
-     *
-     * @param 모델번호
-     *  :삭제전에 모델번호에 해당하는 정보가 있는지를 찾고 없으면
+     * 	종목이름에 해당하는 주식이 없으면
      *     SearchNotFoundException 예외발생
-     *     있으면 전자제품 모델번호에 해당하는 정보를 삭제한다.
+     *     있으면 userstock에서 amount update 또는 delete
      */
     public int stockSell(String stockName, int amountSell, int balance) throws SellingAmountException,SearchNotFoundException;
 
-
-//	public Stock stockDetail(String stockName) throws SearchNotFoundException;
-
-
+    
+    /**
+     * 
+     * @param stockName
+     * @return
+     * @throws SearchNotFoundException
+     */
 	public Stock searchBystockName(String stockName) throws SearchNotFoundException;
 	
-	
+	/**
+	 * 입력한 종목이 있는 종목인지 확인
+	 * @param stock_seq
+	 * @return
+	 * @throws SearchNotFoundException
+	 *select * from User_Stock where stock_seq = (select stock_seq from stock where stock_name = ?)
+	 */
 	public UserStock searchByUserstockName(String stock_name) throws SearchNotFoundException;
 
 
+	/**
+	 * 요일이 바뀔때마다 주가를 변경한다.
+	 * update Stock set price = (select d?)
+	 */
 	public void updatePrice(int today)throws SearchNotFoundException;
 
-
-	public void finish();
-	public List<Headline> headLine(int day) throws SearchNotFoundException;
-
-
 	/**
-	 * 3. 입력한 종목을 매수
+	 * 프로그램 종료 시 userstock 정보 삭제
 	 */
-
-
+	public void finish();
 	
-    
-    
-
+	/**
+	 * 요일이 바뀔 때마다 헤드라인 노출
+	 * select * from headline where day = ?
+	 */
+	public List<Headline> headLine(int day) throws SearchNotFoundException;
 }
 
 
